@@ -1,2 +1,2 @@
-javac *.java -d classes
+javac ./src/*.java -d classes
 java -cp classes javacalculator.JavaCalculator
