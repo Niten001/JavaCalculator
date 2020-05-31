@@ -30,8 +30,8 @@ public class UI implements ActionListener {
    private final JPanel panelSub7;
    private final JPanel panelSub8;
    
-   private final JTextArea text;
-   private final JButton but[], butPoint, butAdd, butMinus, butMultiply, butDivide,
+   public final JTextArea text;
+   public final JButton but[], butPoint, butAdd, butMinus, butMultiply, butDivide,
       butEqual, butCancel, butSquareRoot, butSquare, butInverse,
       butCos, butSin, butTan, butPower, butLog, butRate, butAbs, butBinary;
    private final Calculator calc;
@@ -61,11 +61,11 @@ public class UI implements ActionListener {
       
       textFont = new Font("Consolas",Font.BOLD, 24);
       
-      but = new JButton[10];      
+      but = new JButton[11];      
       for (int i = 0; i < 10; i++) {
          but[i] = new JButton(String.valueOf(i));
       }
-      butPoint = new JButton(".");
+      butPoint = new JButton(".");   
       butAdd = new JButton("+");      
       butMinus = new JButton("-");      
       butMultiply = new JButton("*");      
@@ -74,13 +74,13 @@ public class UI implements ActionListener {
       butSquareRoot = new JButton("sqrt");      
       butSquare = new JButton("x*x");      
       butInverse = new JButton("1/x");      
-      butCos = new JButton("Cos");      
-      butSin = new JButton("Sin");      
-      butTan = new JButton("Tan");      
+      butCos = new JButton("cos");      
+      butSin = new JButton("sin");      
+      butTan = new JButton("tan");      
       butPower = new JButton("x^y");      
-      butLog = new JButton("log10(x)");      
+      butLog = new JButton("log");      
       butRate = new JButton("x%");      
-      butAbs = new JButton("abs(x)");      
+      butAbs = new JButton("abs");      
       butCancel = new JButton("C");      
       butBinary = new JButton("Bin");      
       
@@ -208,7 +208,6 @@ public class UI implements ActionListener {
       }
       if (source == butPoint) {
          text.replaceSelection(".");
-         return;
       } else if (source == butAdd) {
          writer(calc.calculateBi(Calculator.BiOperatorModes.add, reader()));
       } else if (source == butMinus) {
@@ -237,12 +236,12 @@ public class UI implements ActionListener {
          writer(calc.calculateMono(Calculator.MonoOperatorModes.rate, reader()));
       } else if (source == butAbs) {
          writer(calc.calculateMono(Calculator.MonoOperatorModes.abs, reader()));
+      } else if (source == butBinary) {
+         parsetoBinary();
       } else if (source == butEqual) {
          writer(calc.calculateEqual(reader()));
       } else if (source == butCancel) {
          writer(calc.reset());
-      } else if (source == butBinary) {
-         parsetoBinary();
       }
       
       text.selectAll();
