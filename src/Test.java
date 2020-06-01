@@ -8,13 +8,19 @@ public class Test {
     }
 
     // Tests
+    // Tim -> Cos, Sin, Tan
     private static void test1(UI uiCalculator) {
         Random rand = new Random();
-        rand.nextDouble();
-        uiCalculator.text.setText(String.valueOf(rand.nextDouble()));
+        Double rand1 = rand.nextDouble();
+        Double rand2 = rand.nextDouble();
+
+        uiCalculator.text.setText(String.valueOf(rand1));
         uiCalculator.butAdd.doClick();
-        uiCalculator.text.setText(String.valueOf(rand.nextDouble()));
+        uiCalculator.text.setText(String.valueOf(rand2));
         uiCalculator.butEqual.doClick();
+
+        System.out.println(rand1);
+        System.out.println(rand2);
         System.out.println(uiCalculator.text.getText());
     }
 }

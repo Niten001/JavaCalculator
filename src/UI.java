@@ -68,21 +68,21 @@ public class UI implements ActionListener {
       butPoint = new JButton(".");   
       butAdd = new JButton("+");      
       butMinus = new JButton("-");      
-      butMultiply = new JButton("*");      
-      butDivide = new JButton("/");      
+      butMultiply = new JButton("\u00D7");      
+      butDivide = new JButton("\u00F7");      
       butEqual = new JButton("=");      
-      butSquareRoot = new JButton("sqrt");      
-      butSquare = new JButton("x*x");      
-      butInverse = new JButton("1/x");      
+      butSquareRoot = new JButton("\u221Ax");      
+      butSquare = new JButton("x\u00B2");      
+      butInverse = new JButton("x\u207B\u00B9");      
       butCos = new JButton("cos");      
       butSin = new JButton("sin");      
       butTan = new JButton("tan");      
-      butPower = new JButton("x^y");      
+      butPower = new JButton("x\u207F");      
       butLog = new JButton("log");      
       butRate = new JButton("x%");      
-      butAbs = new JButton("abs");      
+      butAbs = new JButton("ABS");      
       butCancel = new JButton("C");      
-      butBinary = new JButton("Bin");      
+      butBinary = new JButton("BIN");      
       
       calc = new Calculator();
       
