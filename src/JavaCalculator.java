@@ -1,13 +1,19 @@
 package javacalculator;
 
+import testingtool.*;
+
 public class JavaCalculator {
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("test")) {
             try {
                 UI uiCalculator = new UI();
                 uiCalculator.init();
-                
-                Test.runTests(uiCalculator);
+
+                //Instantiate testing tool
+                TestingTool test = new TestingTool(uiCalculator);
+
+                //Exit after running tests
+                System.exit(0);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
