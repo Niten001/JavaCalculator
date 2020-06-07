@@ -17,11 +17,18 @@ public class TestingTool {
     }
 
     private void runTests() {
-        this.calcTest.test1();
-        this.reset();
         //Test multiply functionality and then log the results
         int numPassedMultiply = calcTest.testMultiply(NUM_TESTS, RelationTransform.PERMUTE, RelationTransform.EQUAL);
         this.logTestResults("Multiply", numPassedMultiply, NUM_TESTS - numPassedMultiply);
+        this.reset();
+        //Test division functionality and then log the results
+        int numPassedDivide = calcTest.testDivide(NUM_TESTS, null, RelationTransform.INEQUALITY);
+        this.logTestResults("Divide", numPassedDivide, NUM_TESTS - numPassedDivide);
+        this.reset();
+        //Test division functionality and then log the results
+        int numPassedLogarithm = calcTest.testLogarithm(NUM_TESTS, null, RelationTransform.INEQUALITY);
+        this.logTestResults("Logarithm", numPassedLogarithm, NUM_TESTS - numPassedLogarithm);
+        this.reset();
     }
 
     /**
