@@ -9,10 +9,11 @@ public class JavaCalculator {
                 UI uiCalculator = new UI();
                 uiCalculator.init();
 
-                //Instantiate testing tool
+                // Instantiate testing tool
                 TestingTool test = new TestingTool(uiCalculator);
+                test.runTests();
 
-                //Exit after running tests
+                // Exit after running tests
                 System.exit(0);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
