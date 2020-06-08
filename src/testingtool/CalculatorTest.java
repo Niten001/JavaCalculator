@@ -70,7 +70,7 @@ public class CalculatorTest {
             a = rand.nextInt();
             b = rand.nextInt();
 
-            //Do a / b
+            //Do a/b
             this.enterCalculatorInput(a);
             uiCalculator.butDivide.doClick();
             this.enterCalculatorInput(b);
@@ -78,19 +78,24 @@ public class CalculatorTest {
             double output1 = this.getCalculatorOutput();
             uiCalculator.butCancel.doClick();
 
-            /*Metamorphic relation: a/b > 1 if a > b and a/b < 1 if a < b
-            First Case: a >= b then a/b >= 1
-            Second Case: a < b, then a/b < 1
-            Third Case: a > b, b < 0 then a/b < 1
-            Fourth Case: a < b, b < 0, a < 0 then a/b > 1
-            Fith Case: a < b, b < 0, a < 0 then a/b >= 1
-            */
-            if(a >= b && a/b >= 1 || a < b && a/b < 1 && b > 1 || a > b && a/b < 1 && b < 0 || a > b && b < 0 && a < 0 && a/b < 1 || a < b && b < 0 && a < 0 && a/b >= 1) {
+            //Do b/a
+            this.enterCalculatorInput(b);
+            uiCalculator.butDivide.doClick();
+            this.enterCalculatorInput(a);
+            uiCalculator.butEqual.doClick();
+            double output2 = this.getCalculatorOutput();
+            uiCalculator.butCancel.doClick();
+
+            double res = output1 * output2;
+            final double epsilon = 0.00000001;
+            //Metamorphic relation: (a/b) * (b/a) = 1
+            if(res > 1 - epsilon && res < 1 + epsilon)
+            {
                 numPassed++;
             }
             else
             {
-                System.out.println(a + " " + b + " " + (a/b));
+                System.out.println(a + " " + b + " a/b: " + output1 + " b/a: " + output2 + " res: " + output1 * output2);
             }
         }
         return numPassed;
