@@ -12,6 +12,7 @@ public class TestingTool {
     private SinTest sinTest;
     private CosTest cosTest;
     private TanTest tanTest;
+    private TrigTest trigTest;
 
     public TestingTool(UI uiCalculator) {
         this.uiCalculator = uiCalculator;
@@ -28,7 +29,7 @@ public class TestingTool {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
-
+            
         //  Run all tests for the Divide function
             /*
             this.divideTest = new DivideTest(this.uiCalculator);
@@ -67,6 +68,14 @@ public class TestingTool {
             this.tanTest = new TanTest(this.uiCalculator);
             Map<String, boolean[]> tanTests = this.tanTest.testAll();
             for (Map.Entry<String, boolean[]> test : tanTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+            
+        //  Run all tests for the combined Trigonometric functions
+            this.trigTest = new TrigTest(this.uiCalculator);
+            Map<String, boolean[]> trigTests = this.trigTest.testAll();
+            for (Map.Entry<String, boolean[]> test : trigTests.entrySet()) {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
