@@ -32,7 +32,7 @@ public class TanTest {
             for (int i = 0; i < testedValues.length; i++) {
                 this.testingTool.enterCalculatorInput(testedValues[i][0]);
                 this.uiCalculator.butTan.doClick();
-                numPassed[i] = (this.testingTool.getCalculatorOutput() == testedValues[i][1]);
+                numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1]);
                 this.uiCalculator.butCancel.doClick();
             }
 
@@ -57,7 +57,7 @@ public class TanTest {
                 double a2 = -1 * this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                numPassed[i] = (a1 == a2);
+                numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
             }
 
             return numPassed;
@@ -85,7 +85,7 @@ public class TanTest {
                 double a2 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                numPassed[i] = (a1 == a2);
+                numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
             }
 
             return numPassed;

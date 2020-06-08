@@ -30,7 +30,7 @@ public class TrigTest {
                 double a2 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                numPassed[i] = ((a1*a1 + a2*a2) == 1.0);
+                numPassed[i] = this.testingTool.checkFuzzyEqual((a1*a1 + a2*a2), 1.0);
             }
 
             return numPassed;
@@ -79,7 +79,7 @@ public class TrigTest {
 
                         double a2 = s1*s2 + s3*s4;
 
-                    numPassed[i] = (a1 == a2);
+                    numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
 
                 //  cos(x + y) = cos(x)cos(y) - sin(x)sin(y)
                     //  cos(x + y)
@@ -111,7 +111,7 @@ public class TrigTest {
 
                         a2 = s1*s2 - s3*s4;
 
-                    numPassed[i+1] = (a1 == a2);
+                    numPassed[i+1] = this.testingTool.checkFuzzyEqual(a1, a2);
 
                 //  tan(x + y) = (tan(x) + tan(y))/(1 - tan(x)tan(y))
                     //  tan(x + y)
@@ -133,7 +133,7 @@ public class TrigTest {
 
                         a2 = (s1 + s2)/(1 - s1*s2);
 
-                    numPassed[i+2] = (a1 == a2);
+                    numPassed[i+2] = this.testingTool.checkFuzzyEqual(a1, a2);
             }
 
             return numPassed;
@@ -182,7 +182,7 @@ public class TrigTest {
 
                         double a2 = s1*s2 - s3*s4;
 
-                    numPassed[i] = (a1 == a2);
+                    numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
 
                 //  cos(x - y) = cos(x)cos(y) + sin(x)sin(y)
                     //  cos(x + y)
@@ -214,7 +214,7 @@ public class TrigTest {
 
                         a2 = s1*s2 + s3*s4;
 
-                    numPassed[i+1] = (a1 == a2);
+                    numPassed[i+1] = this.testingTool.checkFuzzyEqual(a1, a2);
 
                 //  tan(x - y) = (tan(x) - tan(y))/(1 + tan(x)tan(y))
                     //  tan(x - y)
@@ -236,7 +236,7 @@ public class TrigTest {
 
                         a2 = (s1 - s2)/(1 + s1*s2);
 
-                    numPassed[i+2] = (a1 == a2);
+                    numPassed[i+2] = this.testingTool.checkFuzzyEqual(a1, a2);
             }
 
             return numPassed;

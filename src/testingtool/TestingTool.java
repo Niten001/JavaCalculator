@@ -14,6 +14,8 @@ public class TestingTool {
     private TanTest tanTest;
     private TrigTest trigTest;
 
+    private final double e = 0.000001;  //  e = 1x10^-6
+
     public TestingTool(UI uiCalculator) {
         this.uiCalculator = uiCalculator;
     }
@@ -96,8 +98,14 @@ public class TestingTool {
             public void enterCalculatorInput(double num) {
                 uiCalculator.text.setText(String.valueOf(num));
             }
+
         //  Returns whatever is currently displayed in the calculator output
             public double getCalculatorOutput() {
                 return Double.valueOf(uiCalculator.text.getText());
+            }
+        
+        //  Returns true if the two numbers are within the range e
+            public boolean checkFuzzyEqual(double a, double b) {
+                return ((a - b < e) && (a - b > -e));
             }
 }

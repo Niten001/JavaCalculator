@@ -37,7 +37,7 @@ public class MultiplyTest {
                 double output2 = this.testingTool.getCalculatorOutput();
 
                 //  Commutativity relation: a * b = b * a
-                numPassed[i] = (output1 == output2);
+                numPassed[i] = this.testingTool.checkFuzzyEqual(output1, output2);
             }
 
             return numPassed;
