@@ -13,6 +13,8 @@ public class TestingTool {
     private CosTest cosTest;
     private TanTest tanTest;
     private TrigTest trigTest;
+    private RootTest rootTest;
+    private InverseTest inverseTest;
 
     private final double e = 0.000001;  //  e = 1x10^-6
 
@@ -78,6 +80,22 @@ public class TestingTool {
             this.trigTest = new TrigTest(this.uiCalculator);
             Map<String, boolean[]> trigTests = this.trigTest.testAll();
             for (Map.Entry<String, boolean[]> test : trigTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+
+            //  Run all tests for the combined Trigonometric functions
+            this.rootTest = new RootTest(this.uiCalculator);
+            Map<String, boolean[]> rootTests = this.rootTest.testAll();
+            for (Map.Entry<String, boolean[]> test : rootTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+
+            //  Run all tests for the combined Trigonometric functions
+            this.inverseTest = new InverseTest(this.uiCalculator);
+            Map<String, boolean[]> inverseTests = this.inverseTest.testAll();
+            for (Map.Entry<String, boolean[]> test : inverseTests.entrySet()) {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
