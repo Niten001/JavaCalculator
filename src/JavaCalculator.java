@@ -11,7 +11,11 @@ public class JavaCalculator {
                 uiCalculator.init();
 
                 //Exception handler for AWT-EventQueue errors
+<<<<<<< HEAD
                 Toolkit.getDefaultToolkit().getSystemEventQueue().push(new EventQueueExceptionHandler());
+=======
+                Toolkit.getDefaultToolkit().getSystemEventQueue().push(new EventQueueProxy());
+>>>>>>> Completed MultiplyTest.java
 
                 // Instantiate testing tool
                 TestingTool test = new TestingTool(uiCalculator);
@@ -36,11 +40,21 @@ public class JavaCalculator {
 /**
 Handle AWT EventQueue exceptions
 **/
+<<<<<<< HEAD
 class EventQueueExceptionHandler extends EventQueue {
+=======
+class EventQueueProxy extends EventQueue {
+>>>>>>> Completed MultiplyTest.java
 
     protected void dispatchEvent(AWTEvent newEvent) {
         try {
             super.dispatchEvent(newEvent);
+<<<<<<< HEAD
         } catch (Throwable t) {}
+=======
+        } catch (Throwable t) {
+            System.out.println("");
+        }
+>>>>>>> Completed MultiplyTest.java
     }
 }
