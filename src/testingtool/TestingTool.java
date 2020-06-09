@@ -14,14 +14,14 @@ public class TestingTool {
     private TanTest tanTest;
     private TrigTest trigTest;
 
-    private final double e = 0.000001;  //  e = 1x10^-6
+    private final double e = 0.0000001;  //  e = 1x10^-6
 
     public TestingTool(UI uiCalculator) {
         this.uiCalculator = uiCalculator;
     }
 
     public void runTests() {
-        //  We could potentially make this less "repetettive" if we make a parent class with 
+        //  We could potentially make this less "repetettive" if we make a parent class with
         //  these functions templated, that the test classes then extend.
 
         //  Run all tests for the Multiply function
@@ -31,16 +31,14 @@ public class TestingTool {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
-            
+
         //  Run all tests for the Divide function
-            /*
             this.divideTest = new DivideTest(this.uiCalculator);
             Map<String, boolean[]> divideTests = this.divideTest.testAll();
             for (Map.Entry<String, boolean[]> test : divideTests.entrySet()) {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
-            */
 
         //  Run all tests for the Logarithm function
             this.logTest = new LogTest(this.uiCalculator);
@@ -65,7 +63,7 @@ public class TestingTool {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
-        
+
         //  Run all tests for the Tangent function
             this.tanTest = new TanTest(this.uiCalculator);
             Map<String, boolean[]> tanTests = this.tanTest.testAll();
@@ -73,7 +71,7 @@ public class TestingTool {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
-            
+
         //  Run all tests for the combined Trigonometric functions
             this.trigTest = new TrigTest(this.uiCalculator);
             Map<String, boolean[]> trigTests = this.trigTest.testAll();
@@ -103,7 +101,7 @@ public class TestingTool {
             public double getCalculatorOutput() {
                 return Double.valueOf(uiCalculator.text.getText());
             }
-        
+
         //  Returns true if the two numbers are within the range e
             public boolean checkFuzzyEqual(double a, double b) {
                 return ((a - b < e) && (a - b > -e));

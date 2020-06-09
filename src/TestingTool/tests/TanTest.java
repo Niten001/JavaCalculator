@@ -22,8 +22,8 @@ public class TanTest {
                 { Math.PI/6.0, Math.sqrt(3)/3.0 },
                 { Math.PI/4.0, 1 },
                 { Math.PI/3.0, Math.sqrt(3) },
-                { (3*Math.PI)/8.0, Math.sqrt(2) + 1.0 },
-                { (5*Math.PI)/12.0, 2.0 + Math.sqrt(3) },
+                { (3.0*Math.PI)/8.0, Math.sqrt(2) + 1.0 },
+                { (5.0*Math.PI)/12.0, 2.0 + Math.sqrt(3) },
                 { Math.PI/2.0, Double.POSITIVE_INFINITY }
             };
 
@@ -80,7 +80,7 @@ public class TanTest {
                 double a1 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                this.testingTool.enterCalculatorInput(randomDouble + (randomInt * Math.PI));
+                this.testingTool.enterCalculatorInput(randomDouble + (double)(randomInt) * Math.PI);
                 this.uiCalculator.butTan.doClick();
                 double a2 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();

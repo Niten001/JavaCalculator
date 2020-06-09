@@ -45,8 +45,8 @@ public class LogTest {
         Random rand = new Random();
 
         for (int i = 0; i < numAttempts; i++) {
-            double a = rand.nextInt(Integer.MAX_VALUE - 1) + rand.nextDouble(); //  Positive numbers only for log
-            double b = rand.nextInt(Integer.MAX_VALUE - 1) + rand.nextDouble(); //  Positive numbers only for log
+            double a = (double)(rand.nextInt(Integer.MAX_VALUE - 1)) + rand.nextDouble(); //  Positive numbers only for log
+            double b = (double)(rand.nextInt(Integer.MAX_VALUE - 1)) + rand.nextDouble(); //  Positive numbers only for log
 
             //  Do log(A)
             this.testingTool.enterCalculatorInput(a);
@@ -77,8 +77,8 @@ public class LogTest {
         Random rand = new Random();
 
         for (int i = 0; i < numAttempts; i++) {
-            double a = rand.nextInt(Integer.MAX_VALUE - 1) + rand.nextDouble(); //  Positive numbers only for log
-            double b = rand.nextInt(Integer.MAX_VALUE - 1) + rand.nextDouble(); //  Positive numbers only for log
+            double a = (double)(rand.nextInt(Integer.MAX_VALUE - 1)) + rand.nextDouble(); //  Positive numbers only for log
+            double b = (double)(rand.nextInt(Integer.MAX_VALUE - 1)) + rand.nextDouble(); //  Positive numbers only for log
             double ab = a * b;
 
             //  Do log(A)
@@ -114,7 +114,7 @@ public class LogTest {
     public Map<String, boolean[]> testAll() {
         Map<String, boolean[]> output = new HashMap<String, boolean[]>();
 
-        output.put("Log function specific values", this.testAlgebraicValues());
+        output.put("Logarithm function specific values", this.testAlgebraicValues());
         output.put("Logarithm function Scalar", this.testScalar());
         output.put("Logarithm function Product", this.testProduct());
 
