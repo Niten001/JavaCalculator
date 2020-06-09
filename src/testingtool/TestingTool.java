@@ -4,45 +4,108 @@ import java.util.*;
 import javacalculator.*;
 
 public class TestingTool {
-
-    public final int NUM_TESTS = 100;
-
-    private CalculatorTest calcTest;
     private UI uiCalculator;
+
+    private MultiplyTest multiplyTest;
+    private DivideTest divideTest;
+    private LogTest logTest;
+    private SinTest sinTest;
+    private CosTest cosTest;
+    private TanTest tanTest;
+    private TrigTest trigTest;
+
+    private final double e = 0.000001;  //  e = 1x10^-6
 
     public TestingTool(UI uiCalculator) {
         this.uiCalculator = uiCalculator;
-        this.calcTest = new CalculatorTest(uiCalculator);
-        this.runTests();
     }
 
-    private void runTests() {
-        //Test multiply functionality and then log the results
-        int numPassedMultiply = calcTest.testMultiply(NUM_TESTS, RelationTransform.PERMUTE, RelationTransform.EQUAL);
-        this.logTestResults("Multiply", numPassedMultiply, NUM_TESTS - numPassedMultiply);
-        this.reset();
-        //Test division functionality and then log the results
-        int numPassedDivide = calcTest.testDivide(NUM_TESTS, null, RelationTransform.INEQUALITY);
-        this.logTestResults("Divide", numPassedDivide, NUM_TESTS - numPassedDivide);
-        this.reset();
-        //Test division functionality and then log the results
-        int numPassedLogarithm = calcTest.testLogarithm(NUM_TESTS, null, RelationTransform.INEQUALITY);
-        this.logTestResults("Logarithm", numPassedLogarithm, NUM_TESTS - numPassedLogarithm);
-        this.reset();
+    public void runTests() {
+        //  We could potentially make this less "repetettive" if we make a parent class with 
+        //  these functions templated, that the test classes then extend.
+
+        //  Run all tests for the Multiply function
+            this.multiplyTest = new MultiplyTest(this.uiCalculator);
+            Map<String, boolean[]> multiplyTests = this.multiplyTest.testAll();
+            for (Map.Entry<String, boolean[]> test : multiplyTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+            
+        //  Run all tests for the Divide function
+            /*
+            this.divideTest = new DivideTest(this.uiCalculator);
+            Map<String, boolean[]> divideTests = this.divideTest.testAll();
+            for (Map.Entry<String, boolean[]> test : divideTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+            */
+
+        //  Run all tests for the Logarithm function
+            this.logTest = new LogTest(this.uiCalculator);
+            Map<String, boolean[]> logTests = this.logTest.testAll();
+            for (Map.Entry<String, boolean[]> test : logTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+
+        //  Run all tests for the Sine function
+            this.sinTest = new SinTest(this.uiCalculator);
+            Map<String, boolean[]> sinTests = this.sinTest.testAll();
+            for (Map.Entry<String, boolean[]> test : sinTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+
+        //  Run all tests for the Cosine function
+            this.cosTest = new CosTest(this.uiCalculator);
+            Map<String, boolean[]> cosTests = this.cosTest.testAll();
+            for (Map.Entry<String, boolean[]> test : cosTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+        
+        //  Run all tests for the Tangent function
+            this.tanTest = new TanTest(this.uiCalculator);
+            Map<String, boolean[]> tanTests = this.tanTest.testAll();
+            for (Map.Entry<String, boolean[]> test : tanTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+            
+        //  Run all tests for the combined Trigonometric functions
+            this.trigTest = new TrigTest(this.uiCalculator);
+            Map<String, boolean[]> trigTests = this.trigTest.testAll();
+            for (Map.Entry<String, boolean[]> test : trigTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
     }
 
-    /**
-    Log the results of a test
-    **/
-    private void logTestResults(String testName, int numPassed, int numFailed) {
-        int totalTests = numPassed + numFailed;
-        System.out.println("Completed test for " + testName + " - Passed: " + numPassed + ", Failed: " + numFailed + ", Total: " + totalTests);
+    private void logTestResults(String testName, boolean[] testResults) {
+        int numPassed = 0;
+
+        for (boolean test : testResults) {
+            if (test) { numPassed++; }
+        }
+
+        System.out.println("The test of " + testName + " passed " + numPassed + "/" + testResults.length + " tests.");
     }
 
-    /**
-    Resets the calculator. Must be done at the end of every test!
-    **/
-    public void reset() {
-        this.uiCalculator.butCancel.doClick();
-    }
+    //  Helper functions
+        //  Enters a value into the calculator
+            public void enterCalculatorInput(double num) {
+                uiCalculator.text.setText(String.valueOf(num));
+            }
+
+        //  Returns whatever is currently displayed in the calculator output
+            public double getCalculatorOutput() {
+                return Double.valueOf(uiCalculator.text.getText());
+            }
+        
+        //  Returns true if the two numbers are within the range e
+            public boolean checkFuzzyEqual(double a, double b) {
+                return ((a - b < e) && (a - b > -e));
+            }
 }

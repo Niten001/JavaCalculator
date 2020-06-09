@@ -1,6 +1,7 @@
 package javacalculator;
 
 import testingtool.*;
+import java.awt.*;
 
 public class JavaCalculator {
     public static void main(String[] args) {
@@ -9,10 +10,13 @@ public class JavaCalculator {
                 UI uiCalculator = new UI();
                 uiCalculator.init();
 
-                //Instantiate testing tool
+                // Instantiate testing tool
                 TestingTool test = new TestingTool(uiCalculator);
+                test.runTests();
 
-                //Exit after running tests
+                Toolkit.getDefaultToolkit().getSystemEventQueue().push(new EventQueueProxy());
+
+                // Exit after running tests
                 System.exit(0);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -25,5 +29,17 @@ public class JavaCalculator {
                 System.out.println(e.getMessage());
             }
         }
+    }
+}
+
+/**
+Handle AWT EventQueue exceptions
+**/
+class EventQueueProxy extends EventQueue {
+
+    protected void dispatchEvent(AWTEvent newEvent) {
+        try {
+            super.dispatchEvent(newEvent);
+        } catch (Throwable t) {}
     }
 }
