@@ -21,7 +21,7 @@ public class TestingTool {
     private SquareTest squareTest;
 
 
-    private final double e = 0.000001;  //  e = 1x10^-6
+    private final double e = 0.0000001;  //  e = 1x10^-6
 
     public TestingTool(UI uiCalculator) {
         this.uiCalculator = uiCalculator;
@@ -64,14 +64,12 @@ public class TestingTool {
             System.out.println();
 
         //  Run all tests for the Divide function
-            /*
             this.divideTest = new DivideTest(this.uiCalculator);
             Map<String, boolean[]> divideTests = this.divideTest.testAll();
             for (Map.Entry<String, boolean[]> test : divideTests.entrySet()) {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
-            */
 
         //  Run all tests for the Logarithm function
             this.logTest = new LogTest(this.uiCalculator);
