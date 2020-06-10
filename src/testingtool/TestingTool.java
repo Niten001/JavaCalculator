@@ -6,6 +6,9 @@ import javacalculator.*;
 public class TestingTool {
     private UI uiCalculator;
 
+    private AddTest addTest;
+    private SubtractTest subtractTest;
+    private PowerTest powerTest;
     private MultiplyTest multiplyTest;
     private DivideTest divideTest;
     private LogTest logTest;
@@ -23,8 +26,32 @@ public class TestingTool {
     }
 
     public void runTests() {
-        //  We could potentially make this less "repetettive" if we make a parent class with 
+        //  We could potentially make this less "repetettive" if we make a parent class with
         //  these functions templated, that the test classes then extend.
+
+        //  Run all tests for the Add function
+            this.addTest = new AddTest(this.uiCalculator);
+            Map<String, boolean[]> addTests = this.addTest.testAll();
+            for (Map.Entry<String, boolean[]> test : addTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+
+        //  Run all tests for the Subtract function
+            this.subtractTest = new SubtractTest(this.uiCalculator);
+            Map<String, boolean[]> subtractTests = this.subtractTest.testAll();
+            for (Map.Entry<String, boolean[]> test : subtractTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+
+        //  Run all tests for the Power function
+            this.powerTest = new PowerTest(this.uiCalculator);
+            Map<String, boolean[]> powerTests = this.powerTest.testAll();
+            for (Map.Entry<String, boolean[]> test : powerTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
 
         //  Run all tests for the Multiply function
             this.multiplyTest = new MultiplyTest(this.uiCalculator);
@@ -33,7 +60,7 @@ public class TestingTool {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
-            
+
         //  Run all tests for the Divide function
             /*
             this.divideTest = new DivideTest(this.uiCalculator);
@@ -67,7 +94,7 @@ public class TestingTool {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
-        
+
         //  Run all tests for the Tangent function
             this.tanTest = new TanTest(this.uiCalculator);
             Map<String, boolean[]> tanTests = this.tanTest.testAll();
@@ -75,7 +102,7 @@ public class TestingTool {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
-            
+
         //  Run all tests for the combined Trigonometric functions
             this.trigTest = new TrigTest(this.uiCalculator);
             Map<String, boolean[]> trigTests = this.trigTest.testAll();
@@ -121,7 +148,7 @@ public class TestingTool {
             public double getCalculatorOutput() {
                 return Double.valueOf(uiCalculator.text.getText());
             }
-        
+
         //  Returns true if the two numbers are within the range e
             public boolean checkFuzzyEqual(double a, double b) {
                 return ((a - b < e) && (a - b > -e));
