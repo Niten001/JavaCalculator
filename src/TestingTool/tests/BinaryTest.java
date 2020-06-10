@@ -20,7 +20,7 @@ public class BinaryTest {
 
         for(int i = 0; i < numAttempts; i++) {
             String input = "";
-            int x = rand.nextInt(5) + 1;
+            int x = rand.nextInt(4) + 1;
 
             // Binary Value Test
             for (int j = 0; j < x; j++) {
