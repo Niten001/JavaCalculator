@@ -2,7 +2,7 @@ package testingtool;
 
 import java.io.*;
 import java.util.*;
-import javacalculator.*;
+import calculator.*;
 
 public class TestingTool {
     private UI uiCalculator;

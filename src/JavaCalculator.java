@@ -1,5 +1,6 @@
 package javacalculator;
 
+import calculator.*;
 import testingtool.*;
 import java.awt.*;
 

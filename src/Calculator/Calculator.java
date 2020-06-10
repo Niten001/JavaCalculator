@@ -1,4 +1,4 @@
-package javacalculator;
+package calculator;
 
 import static java.lang.Double.NaN;
 import static java.lang.Math.log;

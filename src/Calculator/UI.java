@@ -1,4 +1,4 @@
-package javacalculator;
+package calculator;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;

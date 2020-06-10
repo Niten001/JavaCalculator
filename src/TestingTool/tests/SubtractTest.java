@@ -1,7 +1,7 @@
 package testingtool;
 
 import java.util.*;
-import javacalculator.*;
+import calculator.*;
 
 public class SubtractTest {
     private UI uiCalculator;
