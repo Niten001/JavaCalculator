@@ -35,10 +35,7 @@ public class ToolCalculator {
     }
 
     public double power(double a, int pow) {
-        for(int i = 0; i < pow; i++) {
-            a *= a;
-        }
-        return a;
+        return Math.pow(a, pow);
     }
 
     public double squareRoot(double a) {

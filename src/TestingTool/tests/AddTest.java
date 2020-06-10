@@ -149,7 +149,7 @@ public class AddTest {
         output.put("Addition function specific values", this.testAlgebraicValues());
         output.put("Addition function commutativity", this.testCommutativity());
         output.put("Addition function associativity", this.testAssociativity());
-        output.put("Addition n-version programming test", this.testNProgramming());
+        output.put("Addition function n-version programming test", this.testNProgramming());
 
         return output;
     }
