@@ -31,20 +31,7 @@ public class TestingTool {
     }
 
     public void runTests() {
-        try {
-            File output = new File("output.txt");
-            output.createNewFile();
-            FileWriter writer = new FileWriter("output.txt");
-            writer.write("The full test results for the testing tool of JavaCalculator.\n");
-            writer.write("The test results are given in the form:\n");
-            writer.write("INPUT1    INPUT2(Optional)    EXPECTED_VALUE    ACTUAL_VALUE    PASS/FAIL\n");
-            writer.write("------------------------------\n");
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
+        generateOutputFile();
         //  We could potentially make this less "repetettive" if we make a parent class with
         //  these functions templated, that the test classes then extend.
 
@@ -191,6 +178,22 @@ public class TestingTool {
                 printTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
+    }
+
+    public void generateOutputFile() {
+        try {
+            File output = new File("output.txt");
+            output.createNewFile();
+            FileWriter writer = new FileWriter("output.txt");
+            writer.write("The full test results for the testing tool of JavaCalculator.\n");
+            writer.write("The test results are given in the form:\n");
+            writer.write("INPUT1    INPUT2(Optional)    EXPECTED_VALUE    ACTUAL_VALUE    PASS/FAIL\n");
+            writer.write("------------------------------\n");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 
     private void logTestResults(String testName, String[][] testResults) {
