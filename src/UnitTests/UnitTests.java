@@ -3,6 +3,7 @@ import org.junit.Test;
 
 import java.io.*;
 import java.util.*;
+import java.awt.*;
 
 import calculator.*;
 import testingtool.*;
@@ -12,7 +13,9 @@ public class UnitTests {
     public void testFuzzyEqual() {
         try {
             UI uiCalculator = new UI();
-            uiCalculator.init();
+
+            // Exception handler for AWT-EventQueue errors
+            Toolkit.getDefaultToolkit().getSystemEventQueue().push(new EventQueueExceptionHandler());
 
             TestingTool test = new TestingTool(uiCalculator);
             Random rand = new Random();
@@ -40,6 +43,9 @@ public class UnitTests {
             UI uiCalculator = new UI();
             uiCalculator.init();
 
+            // Exception handler for AWT-EventQueue errors
+            Toolkit.getDefaultToolkit().getSystemEventQueue().push(new EventQueueExceptionHandler());
+
             TestingTool test = new TestingTool(uiCalculator);
             Random rand = new Random();
             
@@ -60,7 +66,9 @@ public class UnitTests {
     public void testOutputFileExists() {
         try {
             UI uiCalculator = new UI();
-            uiCalculator.init();
+
+            // Exception handler for AWT-EventQueue errors
+            Toolkit.getDefaultToolkit().getSystemEventQueue().push(new EventQueueExceptionHandler());
 
             TestingTool test = new TestingTool(uiCalculator);
             test.generateOutputFile();
@@ -79,6 +87,9 @@ public class UnitTests {
             UI uiCalculator = new UI();
             uiCalculator.init();
 
+            // Exception handler for AWT-EventQueue errors
+            Toolkit.getDefaultToolkit().getSystemEventQueue().push(new EventQueueExceptionHandler());
+
             TestingTool test = new TestingTool(uiCalculator);
             test.runTests();
 
@@ -94,5 +105,14 @@ public class UnitTests {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+}
+
+// Handle AWT EventQueue exceptions
+class EventQueueExceptionHandler extends EventQueue {
+    protected void dispatchEvent(AWTEvent newEvent) {
+        try {
+            super.dispatchEvent(newEvent);
+        } catch (Throwable t) { }
     }
 }
