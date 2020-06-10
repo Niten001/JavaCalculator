@@ -80,11 +80,11 @@ public class CosTest {
                 double a1 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                this.testingTool.enterCalculatorInput(randomDouble + (2 * randomInt * Math.PI));
+                this.testingTool.enterCalculatorInput(randomDouble + (2.0 * (double)(randomInt) * Math.PI));
                 this.uiCalculator.butCos.doClick();
                 double a2 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
-                
+
                 numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
             }
 

@@ -80,7 +80,7 @@ public class SinTest {
                 double a1 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                this.testingTool.enterCalculatorInput(randomDouble + (2 * randomInt * Math.PI));
+                this.testingTool.enterCalculatorInput(randomDouble + (2.0 * (double)(randomInt) * Math.PI));
                 this.uiCalculator.butSin.doClick();
                 double a2 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
@@ -94,7 +94,7 @@ public class SinTest {
         protected boolean[] testPeriodicity() {
             return testPeriodicity(20);
         }
-    
+
     //  Test All
         public Map<String, boolean[]> testAll() {
             Map<String, boolean[]> output = new HashMap<String, boolean[]>();
