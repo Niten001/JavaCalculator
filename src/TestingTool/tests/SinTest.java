@@ -13,7 +13,7 @@ public class SinTest {
     }
 
     //  Test Specific Algebraic Values
-        protected boolean[] testAlgebraicValues() {
+        protected Map<String, String[][]> testAlgebraicValues() {
             //  Array of [Values to be tested, expected results]
             double[][] testedValues = {
                 { 0, 0 },
@@ -27,21 +27,29 @@ public class SinTest {
                 { Math.PI/2.0, 1 }
             };
 
-            boolean[] numPassed = new boolean[testedValues.length];
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[testedValues.length][5];
 
             for (int i = 0; i < testedValues.length; i++) {
                 this.testingTool.enterCalculatorInput(testedValues[i][0]);
                 this.uiCalculator.butSin.doClick();
-                numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1]);
+                results[i] = this.testingTool.insertValues(
+                    testedValues[i][0],
+                    testedValues[i][1],
+                    this.testingTool.getCalculatorOutput(),
+                    this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1])
+                );
                 this.uiCalculator.butCancel.doClick();
             }
 
-            return numPassed;
+            output.put("Sine function specific values", results);
+            return output;
         }
 
     //  Test Parity
-        protected boolean[] testParity(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        protected Map<String, String[][]> testParity(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[numAttempts][5];
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
@@ -58,18 +66,25 @@ public class SinTest {
                 this.uiCalculator.butCancel.doClick();
 
                 // Rule: sin(-x) = -sin(x)
-                numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
+                results[i] = this.testingTool.insertValues(
+                    randomDouble,
+                    a1,
+                    a2,
+                    this.testingTool.checkFuzzyEqual(a1, a2)
+                );
             }
 
-            return numPassed;
+            output.put("Sine function parity", results);
+            return output;
         }
 
-        protected boolean[] testParity() {
+        protected Map<String, String[][]> testParity() {
             return testParity(20);
         }
     //  Test Periodicity
-        protected boolean[] testPeriodicity(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        protected Map<String, String[][]> testPeriodicity(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[numAttempts][5];
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
@@ -87,23 +102,30 @@ public class SinTest {
                 this.uiCalculator.butCancel.doClick();
 
                 // Rule: sin(x) = sin(x + 2πk) where k ∈ Z
-                numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
+                results[i] = this.testingTool.insertValues(
+                    randomDouble,
+                    randomInt,
+                    a1,
+                    a2,
+                    this.testingTool.checkFuzzyEqual(a1, a2)
+                );
             }
 
-            return numPassed;
+            output.put("Sine function periodicity", results);
+            return output;
         }
 
-        protected boolean[] testPeriodicity() {
+        protected Map<String, String[][]> testPeriodicity() {
             return testPeriodicity(20);
         }
 
     //  Test All
-        public Map<String, boolean[]> testAll() {
-            Map<String, boolean[]> output = new HashMap<String, boolean[]>();
+        public Map<String, String[][]> testAll() {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
 
-            output.put("Sine function specific values", this.testAlgebraicValues());
-            output.put("Sine function parity", this.testParity());
-            output.put("Sine function periodicity", this.testPeriodicity());
+            output.putAll(this.testAlgebraicValues());
+            output.putAll(this.testParity());
+            output.putAll(this.testPeriodicity());
 
             return output;
         }
