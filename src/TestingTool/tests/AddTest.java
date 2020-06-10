@@ -112,6 +112,36 @@ public class AddTest {
         return testAssociativity(20);
     }
 
+    //Test the SUT's calculator result with our tool's calculator resut (N-version programming)
+    public boolean[] testNProgramming(int numAttempts) {
+        boolean[] numPassed = new boolean[numAttempts];
+        Random rand = new Random();
+
+        for(int i = 0; i < numAttempts; i++) {
+            double a = rand.nextInt();
+            double b = rand.nextInt();
+
+            //Software under test result
+            this.testingTool.enterCalculatorInput(a);
+            uiCalculator.butAdd.doClick();
+            this.testingTool.enterCalculatorInput(b);
+            uiCalculator.butEqual.doClick();
+            double sutResult = this.testingTool.getCalculatorOutput();
+            uiCalculator.butCancel.doClick();
+
+            //Our tool's result
+            double toolResult = this.testingTool.getToolCalculator().add(a, b);
+
+            numPassed[i] = this.testingTool.checkFuzzyEqual(sutResult, toolResult);
+        }
+
+        return numPassed;
+    }
+
+    public boolean[] testNProgramming() {
+        return testNProgramming(20);
+    }
+
     //  Test All
     public Map<String, boolean[]> testAll() {
         Map<String, boolean[]> output = new HashMap<String, boolean[]>();
@@ -119,6 +149,7 @@ public class AddTest {
         output.put("Addition function specific values", this.testAlgebraicValues());
         output.put("Addition function commutativity", this.testCommutativity());
         output.put("Addition function associativity", this.testAssociativity());
+        output.put("Addition n-version programming test", this.testNProgramming());
 
         return output;
     }
