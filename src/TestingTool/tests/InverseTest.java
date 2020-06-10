@@ -52,7 +52,7 @@ public class InverseTest {
                 double inverse = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                //Rule: 1/x * x = 1
+                // Rule: 1/x * x = 1
                 numPassed[i] = this.testingTool.checkFuzzyEqual(randomDouble * inverse, 1);
             }
 
@@ -82,7 +82,7 @@ public class InverseTest {
                 this.uiCalculator.butCancel.doClick();
 
 
-                //Rule: Symmetry - The inverse of an inverse of x should be x
+                // Rule: Symmetry - The inverse of an inverse of x should be x
                 numPassed[i] = this.testingTool.checkFuzzyEqual(a2, randomDouble);
             }
 

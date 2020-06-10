@@ -14,20 +14,18 @@ public class AddTest {
 
     //  Test Specific Algebraic Values
     public boolean[] testAlgebraicValues() {
-        //  Array of [Values to be tested, expected results]
+        //  Array of [Value 1 to be tested, Value 2 to be tested, expected result]
         double[][] testedValues = {
-            { 1, 0 },
-            { 10, 3 },
-            { 7, 21 },
-            { -6, 3 },
-            { 6.7, 8.0 },
-            { -2, -20 },
-            { 0.2, -3.0 },
-            { 12432, 323 },
-            { 5, -3 }
+            { 1, 0, 1 },
+            { 10, 3, 13 },
+            { 7, 21, 28 },
+            { -6, 3, -3 },
+            { 6.7, 8.0, 14.7 },
+            { -2, -20, -22 },
+            { 0.2, -3.0, -2.8 },
+            { 12432, 323, 12755 },
+            { 5, -3, 2 }
         };
-
-        double[] testedAnswers = {1,13,28,-3,14.7,-22,-2.8,12755,2};
 
         boolean[] numPassed = new boolean[testedValues.length];
 
@@ -36,7 +34,7 @@ public class AddTest {
             this.uiCalculator.butAdd.doClick();
             this.testingTool.enterCalculatorInput(testedValues[i][1]);
             this.uiCalculator.butEqual.doClick();
-            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedAnswers[i]);
+            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][2]);
             this.uiCalculator.butCancel.doClick();
         }
 
@@ -84,11 +82,11 @@ public class AddTest {
         Random rand = new Random();
 
         for(int i = 0; i < numAttempts; i++) {
-            int a = rand.nextInt();
-            int b = rand.nextInt();
-            int c = rand.nextInt();
+            double a = rand.nextInt();
+            double b = rand.nextInt();
+            double c = rand.nextInt();
 
-            //Do (a + b) + c
+            // Do (a + b) + c
             this.testingTool.enterCalculatorInput((a + b));
             uiCalculator.butAdd.doClick();
             this.testingTool.enterCalculatorInput(c);
@@ -96,7 +94,7 @@ public class AddTest {
             double output1 = this.testingTool.getCalculatorOutput();
             uiCalculator.butCancel.doClick();
 
-            //Do a + (b + c)
+            // Do a + (b + c)
             this.testingTool.enterCalculatorInput(a);
             uiCalculator.butAdd.doClick();
             this.testingTool.enterCalculatorInput((b + c));

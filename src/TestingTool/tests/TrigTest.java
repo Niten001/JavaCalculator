@@ -30,6 +30,7 @@ public class TrigTest {
                 double a2 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
+                // Rule: (sin(x))^2 + (cos(x))^2 = 1
                 numPassed[i] = this.testingTool.checkFuzzyEqual((a1*a1 + a2*a2), 1.0);
             }
 

@@ -14,20 +14,18 @@ public class PowerTest {
 
     //  Test Specific Algebraic Values
     public boolean[] testAlgebraicValues() {
-        //  Array of [Values to be tested, expected results]
+        //  Array of [Value 1 to be tested, Value 2 to be tested, expected results]
         double[][] testedValues = {
-            { 1, 3 },
-            { 10, 3 },
-            { 7, 0 },
-            { -6, 3 },
-            { 6.7, 8 },
-            { -2, 15 },
-            { 0.2, 6 },
-            { 1243, 3 },
-            { 5, 3 }
+            { 1, 3, Math.pow(1,3) },
+            { 10, 3, Math.pow(10,3) },
+            { 7, 0, Math.pow(7,0) },
+            { -6, 3, Math.pow(-6,3) },
+            { 6.7, 8, Math.pow(6.7, 8) },
+            { -2, 15, Math.pow(-2,15) },
+            { 0.2, 6, Math.pow(0.2, 6) },
+            { 1243, 3, Math.pow(1243, 3) },
+            { 5, 3, Math.pow(5, 3) }
         };
-
-        double[] testedAnswers = {Math.pow(1,3),Math.pow(10,3),Math.pow(7,0),Math.pow(-6,3),Math.pow(6.7, 8),Math.pow(-2,15),Math.pow(0.2, 6),Math.pow(1243, 3),Math.pow(5, 3)};
 
         boolean[] numPassed = new boolean[testedValues.length];
 
@@ -36,7 +34,7 @@ public class PowerTest {
             this.uiCalculator.butPower.doClick();
             this.testingTool.enterCalculatorInput(testedValues[i][1]);
             this.uiCalculator.butEqual.doClick();
-            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedAnswers[i]);
+            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][2]);
             this.uiCalculator.butCancel.doClick();
         }
 

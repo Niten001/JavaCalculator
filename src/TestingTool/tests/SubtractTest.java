@@ -16,18 +16,16 @@ public class SubtractTest {
     public boolean[] testAlgebraicValues() {
         //  Array of [Values to be tested, expected results]
         double[][] testedValues = {
-            { 1, 0 },
-            { 10, 3 },
-            { 7, 21 },
-            { -6, 3 },
-            { 6.7, 8.0 },
-            { -2, -20 },
-            { 0.2, -3.0 },
-            { 12432, 323 },
-            { 5, -3 }
+            { 1, 0, 1 },
+            { 10, 3, 7 },
+            { 7, 21, -14 },
+            { -6, 3, -9 },
+            { 6.7, 8.0, -1.3 },
+            { -2, -20, 18 },
+            { 0.2, -3.0, 3.2 },
+            { 12432, 323, 12109 },
+            { 5, -3, 8 }
         };
-
-        double[] testedAnswers = {1,7,-14,-9,-1.3,18,3.2,12109,8};
 
         boolean[] numPassed = new boolean[testedValues.length];
 
@@ -36,7 +34,7 @@ public class SubtractTest {
             this.uiCalculator.butMinus.doClick();
             this.testingTool.enterCalculatorInput(testedValues[i][1]);
             this.uiCalculator.butEqual.doClick();
-            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedAnswers[i]);
+            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][2]);
             this.uiCalculator.butCancel.doClick();
         }
 
@@ -52,7 +50,7 @@ public class SubtractTest {
             int a = rand.nextInt();
             int b = rand.nextInt();
 
-            //Do a - b
+            // Do a - b
             this.testingTool.enterCalculatorInput(a);
             uiCalculator.butMinus.doClick();
             this.testingTool.enterCalculatorInput(b);
@@ -60,14 +58,14 @@ public class SubtractTest {
             double output1 = this.testingTool.getCalculatorOutput();
             uiCalculator.butCancel.doClick();
 
-            //Do -(b-a)
+            // Do -(b-a)
             this.testingTool.enterCalculatorInput(b);
             uiCalculator.butMinus.doClick();
             this.testingTool.enterCalculatorInput(a);
             uiCalculator.butEqual.doClick();
             double output2 = -1 * this.testingTool.getCalculatorOutput();
 
-            //  Anticommutativity relation: a - b = -(b - a)
+            // Anticommutativity relation: a - b = -(b - a)
             numPassed[i] = this.testingTool.checkFuzzyEqual(output1, output2);
         }
 
@@ -86,7 +84,7 @@ public class SubtractTest {
         for(int i = 0; i < numAttempts; i++) {
             int a = rand.nextInt();
 
-            //Do a - a
+            // Do a - a
             this.testingTool.enterCalculatorInput(a);
             uiCalculator.butMinus.doClick();
             this.testingTool.enterCalculatorInput(a);

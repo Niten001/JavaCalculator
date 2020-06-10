@@ -89,7 +89,7 @@ public class Calculator {
             case abs:
                 return Math.abs(num);
             default:
-                //never reach
+                // never reach
                 throw new Error();
         }
     }

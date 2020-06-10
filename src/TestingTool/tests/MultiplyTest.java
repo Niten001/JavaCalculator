@@ -14,20 +14,18 @@ public class MultiplyTest {
 
     //  Test Specific Algebraic Values
     public boolean[] testAlgebraicValues() {
-        //  Array of [Values to be tested, expected results]
+        //  Array of [Value 1 to be tested, Value 2 to be tested expected results]
         double[][] testedValues = {
-            { 1, 0 },
-            { 10, 3 },
-            { 7, 21 },
-            { -6, 3 },
-            { 6.7, 8 },
-            { -2, -20 },
-            { 0.2, -3 },
-            { 12432, 323 },
-            { 5, -3 }
+            { 1, 0, 0 },
+            { 10, 3, 30 },
+            { 7, 21, 147 },
+            { -6, 3, -18 },
+            { 6.7, 8, 53.6 },
+            { -2, -20, 40 },
+            { 0.2, -3, -0.6 },
+            { 12432, 323, 4015536 },
+            { 5, -3, -15 }
         };
-
-        double[] testedAnswers = {0,30,147,-18,53.6,40,-0.6,4015536,-15};
 
         boolean[] numPassed = new boolean[testedValues.length];
 
@@ -36,14 +34,14 @@ public class MultiplyTest {
             this.uiCalculator.butMultiply.doClick();
             this.testingTool.enterCalculatorInput(testedValues[i][1]);
             this.uiCalculator.butEqual.doClick();
-            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedAnswers[i]);
+            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][2]);
             this.uiCalculator.butCancel.doClick();
         }
 
         return numPassed;
     }
 
-    //  Test Commutativity
+    // Test Commutativity
     public boolean[] testCommutativity(int numAttempts) {
         boolean[] numPassed = new boolean[numAttempts];
         Random rand = new Random();
@@ -52,7 +50,7 @@ public class MultiplyTest {
             int a = rand.nextInt();
             int b = rand.nextInt();
 
-            //Do a*b
+            // Do a*b
             this.testingTool.enterCalculatorInput(a);
             uiCalculator.butMultiply.doClick();
             this.testingTool.enterCalculatorInput(b);
@@ -60,14 +58,14 @@ public class MultiplyTest {
             double output1 = this.testingTool.getCalculatorOutput();
             uiCalculator.butCancel.doClick();
 
-            //Do b*a
+            // Do b*a
             this.testingTool.enterCalculatorInput(b);
             uiCalculator.butMultiply.doClick();
             this.testingTool.enterCalculatorInput(a);
             uiCalculator.butEqual.doClick();
             double output2 = this.testingTool.getCalculatorOutput();
 
-            //  Commutativity relation: a * b = b * a
+            // Commutativity relation: a*b = b*a
             numPassed[i] = this.testingTool.checkFuzzyEqual(output1, output2);
         }
 
@@ -78,32 +76,32 @@ public class MultiplyTest {
         return testCommutativity(20);
     }
 
-    //  Test Commutativity
+    //  Test Associativity
     public boolean[] testAssociativity(int numAttempts) {
         boolean[] numPassed = new boolean[numAttempts];
         Random rand = new Random();
 
         for(int i = 0; i < numAttempts; i++) {
-            int a = rand.nextInt();
-            int b = rand.nextInt();
-            int c = rand.nextInt();
+            double a = rand.nextInt();
+            double b = rand.nextInt();
+            double c = rand.nextInt();
 
-            //Do (a*b)*c
-            this.testingTool.enterCalculatorInput(a * b);
+            // Do (a*b)*c
+            this.testingTool.enterCalculatorInput(a*b);
             uiCalculator.butMultiply.doClick();
-            this.testingTool.enterCalculatorInput(b);
+            this.testingTool.enterCalculatorInput(c);
             uiCalculator.butEqual.doClick();
             double output1 = this.testingTool.getCalculatorOutput();
             uiCalculator.butCancel.doClick();
 
-            //Do a*(b*c)
+            // Do a*(b*c)
             this.testingTool.enterCalculatorInput(a);
             uiCalculator.butMultiply.doClick();
             this.testingTool.enterCalculatorInput(b*c);
             uiCalculator.butEqual.doClick();
             double output2 = this.testingTool.getCalculatorOutput();
 
-            //  Commutativity relation: a * b = b * a
+            // Associativity relation: (a*b)*c = a*(b*c)
             numPassed[i] = this.testingTool.checkFuzzyEqual(output1, output2);
         }
 
@@ -120,7 +118,7 @@ public class MultiplyTest {
 
         output.put("Multiply function specific values", this.testAlgebraicValues());
         output.put("Multiply function commutativity", this.testCommutativity());
-        output.put("Multiply function associativity", this.testCommutativity());
+        output.put("Multiply function associativity", this.testAssociativity());
 
         return output;
     }

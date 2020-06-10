@@ -57,6 +57,7 @@ public class SinTest {
                 double a2 = -1 * this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
+                // Rule: sin(-x) = -sin(x)
                 numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
             }
 
@@ -85,6 +86,7 @@ public class SinTest {
                 double a2 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
+                // Rule: sin(x) = sin(x + 2πk) where k ∈ Z
                 numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
             }
 

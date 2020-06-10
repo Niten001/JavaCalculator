@@ -19,11 +19,11 @@ public class RootTest {
                 { 4, 2 },
                 { 64, 8 },
                 { 16, 4 },
-                { 17, Math.sqrt(17)},
+                { 17, Math.sqrt(17) },
                 { 0, 0 },
                 { 3, Math.sqrt(3) },
                 { 100, 10 },
-                { 233, Math.sqrt(233)},
+                { 233, Math.sqrt(233) },
                 { 7649, Math.sqrt(7649) }
             };
 
@@ -45,14 +45,14 @@ public class RootTest {
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
-                double randomDouble = rand.nextInt(Integer.MAX_VALUE - 1) + rand.nextDouble(); //No negative values for square root
+                double randomDouble = (double)rand.nextInt(Integer.MAX_VALUE - 1) + rand.nextDouble(); // No negative values for square root
 
                 this.testingTool.enterCalculatorInput(randomDouble);
                 this.uiCalculator.butSquareRoot.doClick();
                 double root = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                //Rule: Root(x) * Root(x) = x
+                // Rule: Root(x) * Root(x) = x
                 numPassed[i] = this.testingTool.checkFuzzyEqual(root * root, randomDouble);
             }
 
@@ -69,8 +69,8 @@ public class RootTest {
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
-                double randomDouble1 = rand.nextInt(Integer.MAX_VALUE - 1) + rand.nextDouble(); //No negative values for square root
-                double randomDouble2 = rand.nextInt(Integer.MAX_VALUE - 1) + rand.nextDouble(); //No negative values for square root
+                double randomDouble1 = (double)rand.nextInt(Integer.MAX_VALUE - 1) + rand.nextDouble(); //No negative values for square root
+                double randomDouble2 = (double)rand.nextInt(Integer.MAX_VALUE - 1) + rand.nextDouble(); //No negative values for square root
 
                 this.testingTool.enterCalculatorInput(randomDouble1);
                 this.uiCalculator.butSquareRoot.doClick();
@@ -87,7 +87,7 @@ public class RootTest {
                 double a3 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                //Rule: Product of Square Roots - Root(xy) = Root(x) * Root(y)
+                // Rule: Product of Square Roots - Root(xy) = Root(x) * Root(y)
                 numPassed[i] = this.testingTool.checkFuzzyEqual(a1 * a2, a3);
             }
 

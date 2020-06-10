@@ -14,20 +14,18 @@ public class DivideTest {
 
     //  Test Specific Algebraic Values
     public boolean[] testAlgebraicValues() {
-        //  Array of [Values to be tested, expected results]
+        //  Array of [Value 1 to be tested, Value 2 to be tested, expected results]
         double[][] testedValues = {
-            { 10, 1 },
-            { 6, 2 },
-            { 100, 10 },
-            { -6, 3 },
-            { 6.7, 8 },
-            { -2, -20 },
-            { 0.2, -1 },
-            { 12432, 323 },
-            { 5, -3 }
+            { 10, 1, 10 },
+            { 6, 2, 3 },
+            { 100, 10, 10 },
+            { -6, 3, -2 },
+            { 6.7, 8, 0.8375 },
+            { -2, -20, 0.1 },
+            { 0.2, -1, -0.2 },
+            { 12432, 323, 12432.0/323.0 },
+            { 5, -3, 5.0/-3.0 }
         };
-
-        double[] testedAnswers = {10,3,10,-2,0.8375,0.1,-0.2,12432.0/323.0, 5.0/-3.0};
 
         boolean[] numPassed = new boolean[testedValues.length];
 
@@ -36,11 +34,7 @@ public class DivideTest {
             this.uiCalculator.butDivide.doClick();
             this.testingTool.enterCalculatorInput(testedValues[i][1]);
             this.uiCalculator.butEqual.doClick();
-            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedAnswers[i]);
-            if(!this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedAnswers[i]))
-            {
-                System.out.println(testedValues[i][0] + " " + testedValues[i][1]);
-            }
+            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][2]);
             this.uiCalculator.butCancel.doClick();
         }
 

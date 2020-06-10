@@ -8,20 +8,19 @@ public class TestingTool {
 
     private AddTest addTest;
     private SubtractTest subtractTest;
-    private PowerTest powerTest;
     private MultiplyTest multiplyTest;
     private DivideTest divideTest;
-    private LogTest logTest;
     private SinTest sinTest;
     private CosTest cosTest;
     private TanTest tanTest;
     private TrigTest trigTest;
     private RootTest rootTest;
-    private InverseTest inverseTest;
     private SquareTest squareTest;
+    private PowerTest powerTest;
+    private InverseTest inverseTest;
+    private LogTest logTest;
 
-
-    private final double e = 0.0000001;  //  e = 1x10^-6
+    private final double e = 0.000001;  //  e = 1x10^-6
 
     public TestingTool(UI uiCalculator) {
         this.uiCalculator = uiCalculator;
@@ -47,14 +46,6 @@ public class TestingTool {
             }
             System.out.println();
 
-        //  Run all tests for the Power function
-            this.powerTest = new PowerTest(this.uiCalculator);
-            Map<String, boolean[]> powerTests = this.powerTest.testAll();
-            for (Map.Entry<String, boolean[]> test : powerTests.entrySet()) {
-                logTestResults(test.getKey(), test.getValue());
-            }
-            System.out.println();
-
         //  Run all tests for the Multiply function
             this.multiplyTest = new MultiplyTest(this.uiCalculator);
             Map<String, boolean[]> multiplyTests = this.multiplyTest.testAll();
@@ -67,14 +58,6 @@ public class TestingTool {
             this.divideTest = new DivideTest(this.uiCalculator);
             Map<String, boolean[]> divideTests = this.divideTest.testAll();
             for (Map.Entry<String, boolean[]> test : divideTests.entrySet()) {
-                logTestResults(test.getKey(), test.getValue());
-            }
-            System.out.println();
-
-        //  Run all tests for the Logarithm function
-            this.logTest = new LogTest(this.uiCalculator);
-            Map<String, boolean[]> logTests = this.logTest.testAll();
-            for (Map.Entry<String, boolean[]> test : logTests.entrySet()) {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
@@ -111,7 +94,7 @@ public class TestingTool {
             }
             System.out.println();
 
-            //  Run all tests for the Root functions
+        //  Run all tests for the Root functions
             this.rootTest = new RootTest(this.uiCalculator);
             Map<String, boolean[]> rootTests = this.rootTest.testAll();
             for (Map.Entry<String, boolean[]> test : rootTests.entrySet()) {
@@ -119,7 +102,23 @@ public class TestingTool {
             }
             System.out.println();
 
-            //  Run all tests for the Inverse functions
+        //  Run all tests for the Square functions
+            this.squareTest = new SquareTest(this.uiCalculator);
+            Map<String, boolean[]> squareTests = this.squareTest.testAll();
+            for (Map.Entry<String, boolean[]> test : squareTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+
+        //  Run all tests for the Power function
+            this.powerTest = new PowerTest(this.uiCalculator);
+            Map<String, boolean[]> powerTests = this.powerTest.testAll();
+            for (Map.Entry<String, boolean[]> test : powerTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+
+        //  Run all tests for the Inverse functions
             this.inverseTest = new InverseTest(this.uiCalculator);
             Map<String, boolean[]> inverseTests = this.inverseTest.testAll();
             for (Map.Entry<String, boolean[]> test : inverseTests.entrySet()) {
@@ -127,13 +126,20 @@ public class TestingTool {
             }
             System.out.println();
 
-            //  Run all tests for the Square functions
-            this.squareTest = new SquareTest(this.uiCalculator);
-            Map<String, boolean[]> squareTests = this.squareTest.testAll();
-            for (Map.Entry<String, boolean[]> test : squareTests.entrySet()) {
+        //  Run all tests for the Rate function
+
+        //  Run all tests for the Logarithm function
+            this.logTest = new LogTest(this.uiCalculator);
+            Map<String, boolean[]> logTests = this.logTest.testAll();
+            for (Map.Entry<String, boolean[]> test : logTests.entrySet()) {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
+        
+        //  Run all tests for the Absolute Value function
+
+        //  Run all tests for the Binary function
+
     }
 
     private void logTestResults(String testName, boolean[] testResults) {

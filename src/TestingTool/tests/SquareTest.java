@@ -19,7 +19,7 @@ public class SquareTest {
                 { 2, 4 },
                 { 4, 16 },
                 { -5.78, Math.pow(-5.78, 2) },
-                { -17, Math.pow(-17, 2)},
+                { -17, Math.pow(-17, 2) },
                 { 0, Math.pow(0, 2) },
                 { -7, Math.pow(-7, 2) },
                 { 10, Math.pow(10, 2) },
@@ -52,8 +52,8 @@ public class SquareTest {
                 double square = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                //Rule: A square of a number should always be positive
-                numPassed[i] = square > 0;
+                // Rule: A square of a number should always be positive
+                numPassed[i] = (square >= 0);
             }
 
             return numPassed;
@@ -81,7 +81,7 @@ public class SquareTest {
                 double square2 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                //Rule: Property of squares - (x)^2 = (-x)^2
+                // Rule: Property of squares - (x)^2 = (-x)^2
                 numPassed[i] = this.testingTool.checkFuzzyEqual(square1, square2);
             }
 

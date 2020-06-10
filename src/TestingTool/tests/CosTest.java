@@ -47,16 +47,17 @@ public class CosTest {
             for (int i = 0; i < numAttempts; i++) {
                 double randomDouble = rand.nextDouble();
 
-                this.testingTool.enterCalculatorInput(-1 * randomDouble);
+                this.testingTool.enterCalculatorInput(randomDouble);
                 this.uiCalculator.butCos.doClick();
                 double a1 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                this.testingTool.enterCalculatorInput(randomDouble);
+                this.testingTool.enterCalculatorInput(-1 * randomDouble);
                 this.uiCalculator.butCos.doClick();
                 double a2 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
+                // Rule: cos(x) = cos(-x)
                 numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
             }
 
@@ -85,6 +86,7 @@ public class CosTest {
                 double a2 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
+                // Rule: cos(x) = cos(x + 2πk) where k ∈ Z
                 numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
             }
 
