@@ -97,6 +97,34 @@ public class SinTest {
             return testPeriodicity(20);
         }
 
+        //Test the SUT's calculator result with our tool's calculator resut (N-version programming)
+        public boolean[] testNProgramming(int numAttempts) {
+            boolean[] numPassed = new boolean[numAttempts];
+            Random rand = new Random();
+
+            for(int i = 0; i < numAttempts; i++) {
+                double a = rand.nextDouble();
+
+                //Software under test result
+                this.testingTool.enterCalculatorInput(a);
+                uiCalculator.butSin.doClick();
+                double sutResult = this.testingTool.getCalculatorOutput();
+                uiCalculator.butCancel.doClick();
+
+                //Our tool's result
+                double toolResult = this.testingTool.getToolCalculator().sin(a);
+
+                numPassed[i] = this.testingTool.checkFuzzyEqual(sutResult, toolResult);
+            }
+
+            return numPassed;
+        }
+
+        public boolean[] testNProgramming() {
+            return testNProgramming(20);
+        }
+
+
     //  Test All
         public Map<String, boolean[]> testAll() {
             Map<String, boolean[]> output = new HashMap<String, boolean[]>();
@@ -104,6 +132,7 @@ public class SinTest {
             output.put("Sine function specific values", this.testAlgebraicValues());
             output.put("Sine function parity", this.testParity());
             output.put("Sine function periodicity", this.testPeriodicity());
+            output.put("Sine function n-version programming test", this.testNProgramming());
 
             return output;
         }

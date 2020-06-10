@@ -96,7 +96,34 @@ public class TanTest {
         public boolean[] testPeriodicity() {
             return testPeriodicity(20);
         }
-        
+
+        //Test the SUT's calculator result with our tool's calculator resut (N-version programming)
+        public boolean[] testNProgramming(int numAttempts) {
+            boolean[] numPassed = new boolean[numAttempts];
+            Random rand = new Random();
+
+            for(int i = 0; i < numAttempts; i++) {
+                double randomDouble = rand.nextDouble();
+
+                //Software under test result
+                this.testingTool.enterCalculatorInput(randomDouble);
+                uiCalculator.butTan.doClick();
+                double sutResult = this.testingTool.getCalculatorOutput();
+                uiCalculator.butCancel.doClick();
+
+                //Our tool's result
+                double toolResult = this.testingTool.getToolCalculator().tan(randomDouble);
+
+                numPassed[i] = this.testingTool.checkFuzzyEqual(sutResult, toolResult);
+            }
+
+            return numPassed;
+        }
+
+        public boolean[] testNProgramming() {
+            return testNProgramming(20);
+        }
+
     //  Test All
         public Map<String, boolean[]> testAll() {
             Map<String, boolean[]> output = new HashMap<String, boolean[]>();
@@ -104,7 +131,7 @@ public class TanTest {
             output.put("Tangent function specific values", this.testAlgebraicValues());
             output.put("Tangent function parity", this.testParity());
             output.put("Tangent function periodicity", this.testPeriodicity());
-
+            output.put("Tangent function n-version programming test", this.testNProgramming());
             return output;
         }
 }

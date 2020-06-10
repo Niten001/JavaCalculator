@@ -103,6 +103,36 @@ public class SubtractTest {
         return testIdentity(20);
     }
 
+    //Test the SUT's calculator result with our tool's calculator resut (N-version programming)
+    public boolean[] testNProgramming(int numAttempts) {
+        boolean[] numPassed = new boolean[numAttempts];
+        Random rand = new Random();
+
+        for(int i = 0; i < numAttempts; i++) {
+            int a = rand.nextInt();
+            int b = rand.nextInt();
+
+            //Software under test result
+            this.testingTool.enterCalculatorInput(a);
+            uiCalculator.butMinus.doClick();
+            this.testingTool.enterCalculatorInput(b);
+            uiCalculator.butEqual.doClick();
+            double sutResult = this.testingTool.getCalculatorOutput();
+            uiCalculator.butCancel.doClick();
+
+            //Our tool's result
+            double toolResult = this.testingTool.getToolCalculator().subtract(a, b);
+
+            numPassed[i] = this.testingTool.checkFuzzyEqual(sutResult, toolResult);
+        }
+
+        return numPassed;
+    }
+
+    public boolean[] testNProgramming() {
+        return testNProgramming(20);
+    }
+
     //  Test All
     public Map<String, boolean[]> testAll() {
         Map<String, boolean[]> output = new HashMap<String, boolean[]>();
@@ -110,6 +140,7 @@ public class SubtractTest {
         output.put("Subtraction function specific values", this.testAlgebraicValues());
         output.put("Subtraction function anticommutativity", this.testAnticommutativity());
         output.put("Subtraction function identity", this.testIdentity());
+        output.put("Subtraction function n-version programming test", this.testNProgramming());
 
         return output;
     }
