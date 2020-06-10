@@ -124,6 +124,36 @@ public class PowerTest {
         return testMultiplyIdentity(20);
     }
 
+    //Test the SUT's calculator result with our tool's calculator resut (N-version programming)
+    public boolean[] testNProgramming(int numAttempts) {
+        boolean[] numPassed = new boolean[numAttempts];
+        Random rand = new Random();
+
+        for(int i = 0; i < numAttempts; i++) {
+            int a = rand.nextInt(100);
+            int n = rand.nextInt(10);
+
+            //Software under test result
+            this.testingTool.enterCalculatorInput(a);
+            uiCalculator.butPower.doClick();
+            this.testingTool.enterCalculatorInput(n);
+            uiCalculator.butEqual.doClick();
+            double sutResult = this.testingTool.getCalculatorOutput();
+            uiCalculator.butCancel.doClick();
+
+            //Our tool's result
+            double toolResult = this.testingTool.getToolCalculator().power(a, n);
+
+            numPassed[i] = this.testingTool.checkFuzzyEqual(sutResult, toolResult);
+        }
+
+        return numPassed;
+    }
+
+    public boolean[] testNProgramming() {
+        return testNProgramming(20);
+    }
+
     //  Test All
     public Map<String, boolean[]> testAll() {
         Map<String, boolean[]> output = new HashMap<String, boolean[]>();
@@ -131,6 +161,7 @@ public class PowerTest {
         output.put("Power function specific values", this.testAlgebraicValues());
         output.put("Power function addition identity", this.testAdditionIdentity());
         output.put("Power function multiply identity", this.testMultiplyIdentity());
+        output.put("Power function n-version programming test", this.testNProgramming());
 
         return output;
     }
