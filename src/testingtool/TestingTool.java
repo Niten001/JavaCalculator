@@ -6,6 +6,8 @@ import javacalculator.*;
 public class TestingTool {
     private UI uiCalculator;
 
+    private ToolCalculator toolCalculator; //Used to do n-version programming
+
     private AddTest addTest;
     private SubtractTest subtractTest;
     private MultiplyTest multiplyTest;
@@ -24,6 +26,7 @@ public class TestingTool {
 
     public TestingTool(UI uiCalculator) {
         this.uiCalculator = uiCalculator;
+        this.toolCalculator = new ToolCalculator();
     }
 
     public void runTests() {
@@ -135,7 +138,7 @@ public class TestingTool {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
-        
+
         //  Run all tests for the Absolute Value function
 
         //  Run all tests for the Binary function
@@ -150,6 +153,10 @@ public class TestingTool {
         }
 
         System.out.println("The test of " + testName + " passed " + numPassed + "/" + testResults.length + " tests.");
+    }
+
+    public ToolCalculator getToolCalculator() {
+        return toolCalculator;
     }
 
     //  Helper functions
