@@ -19,6 +19,8 @@ public class TestingTool {
     private PowerTest powerTest;
     private InverseTest inverseTest;
     private LogTest logTest;
+    private AbsTest absTest;
+    private BinaryTest binTest;
 
     private final double e = 0.000001;  //  e = 1x10^-6
 
@@ -137,9 +139,20 @@ public class TestingTool {
             System.out.println();
         
         //  Run all tests for the Absolute Value function
+            this.absTest = new AbsTest(this.uiCalculator);
+            Map<String, boolean[]> absTests = this.absTest.testAll();
+            for (Map.Entry<String, boolean[]> test : absTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
 
         //  Run all tests for the Binary function
-
+            this.binTest = new BinaryTest(this.uiCalculator);
+            Map<String, boolean[]> binTests = this.binTest.testAll();
+            for (Map.Entry<String, boolean[]> test : binTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
     }
 
     private void logTestResults(String testName, boolean[] testResults) {

@@ -86,7 +86,7 @@ public class TanTest {
                 double a2 = this.testingTool.getCalculatorOutput();
                 this.uiCalculator.butCancel.doClick();
 
-                // Rule: sin(x) = sin(x + πk) where k ∈ Z
+                // Rule: tan(x) = tan(x + πk) where k ∈ Z
                 numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
             }
 
