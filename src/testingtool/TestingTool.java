@@ -15,6 +15,8 @@ public class TestingTool {
     private TrigTest trigTest;
     private RootTest rootTest;
     private InverseTest inverseTest;
+    private SquareTest squareTest;
+
 
     private final double e = 0.000001;  //  e = 1x10^-6
 
@@ -84,7 +86,7 @@ public class TestingTool {
             }
             System.out.println();
 
-            //  Run all tests for the combined Trigonometric functions
+            //  Run all tests for the Root functions
             this.rootTest = new RootTest(this.uiCalculator);
             Map<String, boolean[]> rootTests = this.rootTest.testAll();
             for (Map.Entry<String, boolean[]> test : rootTests.entrySet()) {
@@ -92,10 +94,18 @@ public class TestingTool {
             }
             System.out.println();
 
-            //  Run all tests for the combined Trigonometric functions
+            //  Run all tests for the Inverse functions
             this.inverseTest = new InverseTest(this.uiCalculator);
             Map<String, boolean[]> inverseTests = this.inverseTest.testAll();
             for (Map.Entry<String, boolean[]> test : inverseTests.entrySet()) {
+                logTestResults(test.getKey(), test.getValue());
+            }
+            System.out.println();
+
+            //  Run all tests for the Square functions
+            this.squareTest = new SquareTest(this.uiCalculator);
+            Map<String, boolean[]> squareTests = this.squareTest.testAll();
+            for (Map.Entry<String, boolean[]> test : squareTests.entrySet()) {
                 logTestResults(test.getKey(), test.getValue());
             }
             System.out.println();
