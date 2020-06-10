@@ -13,16 +13,19 @@ public class BinaryTest {
     }
 
     // Binary Validity
-    public boolean[] testValidity(int numAttempts) {
-        boolean[] numPassed = new boolean[numAttempts];
+    public Map<String, String[][]> testValidity(int numAttempts) {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        String[][] results = new String[numAttempts][5];
         Random rand = new Random();
 
         for(int i = 0; i < numAttempts; i++) {
+            String input = "";
             int x = rand.nextInt(5) + 1;
 
             // Binary Value Test
             for (int j = 0; j < x; j++) {
                 int y = rand.nextInt(9);
+                input += y;
                 uiCalculator.but[y].doClick();
             }
             uiCalculator.butBinary.doClick();
@@ -36,21 +39,28 @@ public class BinaryTest {
                     check = false;
                 }
             }
-            numPassed[i] = check;
+            
+            results[i] = this.testingTool.insertValues(
+                Double.parseDouble(input),
+                Integer.toBinaryString(Integer.parseInt(input)),
+                binOutput,
+                check
+            );
         }
 
-        return numPassed;
+        output.put("Binary function validity", results);
+        return output;
     }
 
-    public boolean[] testValidity() {
+    public Map<String, String[][]> testValidity() {
         return testValidity(20);
     }
 
     // Test All
-    public Map<String, boolean[]> testAll() {
-        Map<String, boolean[]> output = new HashMap<String, boolean[]>();
+    public Map<String, String[][]> testAll() {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
 
-        output.put("Binary function validity", this.testValidity());
+        output.putAll(this.testValidity());
 
         return output;
     }

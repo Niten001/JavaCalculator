@@ -13,7 +13,7 @@ public class MultiplyTest {
     }
 
     //  Test Specific Algebraic Values
-    public boolean[] testAlgebraicValues() {
+    public Map<String, String[][]> testAlgebraicValues() {
         //  Array of [Value 1 to be tested, Value 2 to be tested expected results]
         double[][] testedValues = {
             { 1, 0, 0 },
@@ -27,23 +27,32 @@ public class MultiplyTest {
             { 5, -3, -15 }
         };
 
-        boolean[] numPassed = new boolean[testedValues.length];
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        String[][] results = new String[testedValues.length][5];
 
         for (int i = 0; i < testedValues.length; i++) {
             this.testingTool.enterCalculatorInput(testedValues[i][0]);
             this.uiCalculator.butMultiply.doClick();
             this.testingTool.enterCalculatorInput(testedValues[i][1]);
             this.uiCalculator.butEqual.doClick();
-            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][2]);
+            results[i] = this.testingTool.insertValues(
+                testedValues[i][0],
+                testedValues[i][1],
+                testedValues[i][2],
+                this.testingTool.getCalculatorOutput(),
+                this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][2])
+            );
             this.uiCalculator.butCancel.doClick();
         }
 
-        return numPassed;
+        output.put("Multiply function specific values", results);
+        return output;
     }
 
     // Test Commutativity
-    public boolean[] testCommutativity(int numAttempts) {
-        boolean[] numPassed = new boolean[numAttempts];
+    public Map<String, String[][]> testCommutativity(int numAttempts) {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        String[][] results = new String[numAttempts][5];
         Random rand = new Random();
 
         for(int i = 0; i < numAttempts; i++) {
@@ -66,19 +75,27 @@ public class MultiplyTest {
             double output2 = this.testingTool.getCalculatorOutput();
 
             // Commutativity relation: a*b = b*a
-            numPassed[i] = this.testingTool.checkFuzzyEqual(output1, output2);
+            results[i] = this.testingTool.insertValues(
+                a,
+                b,
+                output1,
+                output2,
+                this.testingTool.checkFuzzyEqual(output1, output2)
+            );
         }
 
-        return numPassed;
+        output.put("Multiply function commutativity", results);
+        return output;
     }
 
-    public boolean[] testCommutativity() {
+    public Map<String, String[][]> testCommutativity() {
         return testCommutativity(20);
     }
 
     //  Test Associativity
-    public boolean[] testAssociativity(int numAttempts) {
-        boolean[] numPassed = new boolean[numAttempts];
+    public Map<String, String[][]> testAssociativity(int numAttempts) {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        String[][] results = new String[numAttempts][5];
         Random rand = new Random();
 
         for(int i = 0; i < numAttempts; i++) {
@@ -102,23 +119,31 @@ public class MultiplyTest {
             double output2 = this.testingTool.getCalculatorOutput();
 
             // Associativity relation: (a*b)*c = a*(b*c)
-            numPassed[i] = this.testingTool.checkFuzzyEqual(output1, output2);
+            results[i] = this.testingTool.insertValues(
+                a,
+                b,
+                c,
+                output1,
+                output2,
+                this.testingTool.checkFuzzyEqual(output1, output2)
+            );
         }
 
-        return numPassed;
+        output.put("Multiply function associativity", results);
+        return output;
     }
 
-    public boolean[] testAssociativity() {
+    public Map<String, String[][]> testAssociativity() {
         return testAssociativity(20);
     }
 
     //  Test All
-    public Map<String, boolean[]> testAll() {
-        Map<String, boolean[]> output = new HashMap<String, boolean[]>();
+    public Map<String, String[][]> testAll() {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
 
-        output.put("Multiply function specific values", this.testAlgebraicValues());
-        output.put("Multiply function commutativity", this.testCommutativity());
-        output.put("Multiply function associativity", this.testAssociativity());
+        output.putAll(this.testAlgebraicValues());
+        output.putAll(this.testCommutativity());
+        output.putAll(this.testAssociativity());
 
         return output;
     }

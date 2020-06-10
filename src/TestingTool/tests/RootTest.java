@@ -13,7 +13,7 @@ public class RootTest {
     }
 
     //  Test Specific Algebraic Values
-        protected boolean[] testAlgebraicValues() {
+        protected Map<String, String[][]> testAlgebraicValues() {
             //  Array of [Values to be tested, expected results]
             double[][] testedValues = {
                 { 4, 2 },
@@ -27,21 +27,29 @@ public class RootTest {
                 { 7649, Math.sqrt(7649) }
             };
 
-            boolean[] numPassed = new boolean[testedValues.length];
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[testedValues.length][5];
 
             for (int i = 0; i < testedValues.length; i++) {
                 this.testingTool.enterCalculatorInput(testedValues[i][0]);
                 this.uiCalculator.butSquareRoot.doClick();
-                numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1]);
+                results[i] = this.testingTool.insertValues(
+                    testedValues[i][0],
+                    testedValues[i][1],
+                    this.testingTool.getCalculatorOutput(),
+                    this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1])
+                );
                 this.uiCalculator.butCancel.doClick();
             }
 
-            return numPassed;
+            output.put("Square Root function specific values", results);
+            return output;
         }
 
     //  Test Root Squared
-        protected boolean[] testRootSquared(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        protected Map<String, String[][]> testRootSquared(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[numAttempts][5];
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
@@ -53,19 +61,26 @@ public class RootTest {
                 this.uiCalculator.butCancel.doClick();
 
                 // Rule: Root(x) * Root(x) = x
-                numPassed[i] = this.testingTool.checkFuzzyEqual(root * root, randomDouble);
+                results[i] = this.testingTool.insertValues(
+                    randomDouble,
+                    root * root,
+                    randomDouble,
+                    this.testingTool.checkFuzzyEqual(root * root, randomDouble)
+                );
             }
 
-            return numPassed;
+            output.put("Square Root function root squared", results);
+            return output;
         }
 
-        protected boolean[] testRootSquared() {
+        protected Map<String, String[][]> testRootSquared() {
             return testRootSquared(20);
         }
 
     //  Test Product
-        protected boolean[] testProduct(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        protected Map<String, String[][]> testProduct(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[numAttempts][5];
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
@@ -88,23 +103,30 @@ public class RootTest {
                 this.uiCalculator.butCancel.doClick();
 
                 // Rule: Product of Square Roots - Root(xy) = Root(x) * Root(y)
-                numPassed[i] = this.testingTool.checkFuzzyEqual(a1 * a2, a3);
+                results[i] = this.testingTool.insertValues(
+                    randomDouble1,
+                    randomDouble2,
+                    a1 * a2,
+                    a3,
+                    this.testingTool.checkFuzzyEqual(a1 * a2, a3)
+                );
             }
 
-            return numPassed;
+            output.put("Square Root function product", results);
+            return output;
         }
 
-        protected boolean[] testProduct() {
+        protected Map<String, String[][]> testProduct() {
             return testProduct(20);
         }
     
     //  Test All
-        public Map<String, boolean[]> testAll() {
-            Map<String, boolean[]> output = new HashMap<String, boolean[]>();
+        public Map<String, String[][]> testAll() {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
 
-            output.put("Square Root function specific values", this.testAlgebraicValues());
-            output.put("Square Root function root squared", this.testRootSquared());
-            output.put("Square Root function product", this.testProduct());
+            output.putAll(this.testAlgebraicValues());
+            output.putAll(this.testRootSquared());
+            output.putAll(this.testProduct());
 
             return output;
         }

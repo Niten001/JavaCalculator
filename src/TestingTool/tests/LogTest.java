@@ -13,7 +13,7 @@ public class LogTest {
     }
 
     //  Test Specific Algebraic Values
-    public boolean[] testAlgebraicValues() {
+    public Map<String, String[][]> testAlgebraicValues() {
         //  Array of [Values to be tested, expected results]
         double[][] testedValues = {
             { 1, 0 },
@@ -27,21 +27,29 @@ public class LogTest {
             { 13, Math.log10(13) }
         };
 
-        boolean[] numPassed = new boolean[testedValues.length];
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        String[][] results = new String[testedValues.length][5];
 
         for (int i = 0; i < testedValues.length; i++) {
             this.testingTool.enterCalculatorInput(testedValues[i][0]);
             this.uiCalculator.butLog.doClick();
-            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1]);
+            results[i] = this.testingTool.insertValues(
+                testedValues[i][0],
+                testedValues[i][1],
+                this.testingTool.getCalculatorOutput(),
+                this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1])
+            );
             this.uiCalculator.butCancel.doClick();
         }
 
-        return numPassed;
+        output.put("Logarithm function specific values", results);
+        return output;
     }
 
     //  Test Scalar
-    protected boolean[] testScalar(int numAttempts) {
-        boolean[] numPassed = new boolean[numAttempts];
+    protected Map<String, String[][]> testScalar(int numAttempts) {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        String[][] results = new String[numAttempts][5];
         Random rand = new Random();
 
         for (int i = 0; i < numAttempts; i++) {
@@ -61,19 +69,27 @@ public class LogTest {
             uiCalculator.butCancel.doClick();
 
             //  Scalar relation: log(a) > log(b) if a > b and log(b) > log(a) if b > a
-            numPassed[i] = (a >= b && logA >= logB || b > a && logB > logA);
+            results[i] = this.testingTool.insertValues(
+                a,
+                b,
+                logA,
+                logB,
+                (a >= b && logA >= logB || b > a && logB > logA)
+            );
         }
 
-        return numPassed;
+        output.put("Logarithm function Scalar", results);
+        return output;
     }
 
-    protected boolean[] testScalar() {
+    protected Map<String, String[][]> testScalar() {
         return testScalar(20);
     }
 
     //  Test Product
-    protected boolean[] testProduct(int numAttempts) {
-        boolean[] numPassed = new boolean[numAttempts];
+    protected Map<String, String[][]> testProduct(int numAttempts) {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        String[][] results = new String[numAttempts][5];
         Random rand = new Random();
 
         for (int i = 0; i < numAttempts; i++) {
@@ -100,23 +116,30 @@ public class LogTest {
             uiCalculator.butCancel.doClick();
 
             //  Product relation: log(AB) = log(A) + log(B)
-            numPassed[i] = this.testingTool.checkFuzzyEqual(logA + logB, logAB);
+            results[i] = this.testingTool.insertValues(
+                a,
+                b,
+                logA + logB,
+                logAB,
+                this.testingTool.checkFuzzyEqual(logA + logB, logAB)
+            );
         }
 
-        return numPassed;
+        output.put("Logarithm function Product", results);
+        return output;
     }
 
-    protected boolean[] testProduct() {
+    protected Map<String, String[][]> testProduct() {
         return testProduct(20);
     }
 
     //  Test All
-    public Map<String, boolean[]> testAll() {
-        Map<String, boolean[]> output = new HashMap<String, boolean[]>();
+    public Map<String, String[][]> testAll() {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
 
-        output.put("Logarithm function specific values", this.testAlgebraicValues());
-        output.put("Logarithm function Scalar", this.testScalar());
-        output.put("Logarithm function Product", this.testProduct());
+        output.putAll(this.testAlgebraicValues());
+        output.putAll(this.testScalar());
+        output.putAll(this.testProduct());
         
         return output;
     }

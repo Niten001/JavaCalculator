@@ -13,7 +13,7 @@ public class SquareTest {
     }
 
     //  Test Specific Algebraic Values
-        protected boolean[] testAlgebraicValues() {
+        protected Map<String, String[][]> testAlgebraicValues() {
             //  Array of [Values to be tested, expected results]
             double[][] testedValues = {
                 { 2, 4 },
@@ -27,21 +27,29 @@ public class SquareTest {
                 { 4973, Math.pow(4973, 2) }
             };
 
-            boolean[] numPassed = new boolean[testedValues.length];
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[testedValues.length][5];
 
             for (int i = 0; i < testedValues.length; i++) {
                 this.testingTool.enterCalculatorInput(testedValues[i][0]);
                 this.uiCalculator.butSquare.doClick();
-                numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1]);
+                results[i] = this.testingTool.insertValues(
+                    testedValues[i][0],
+                    testedValues[i][1],
+                    this.testingTool.getCalculatorOutput(),
+                    this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1])
+                );
                 this.uiCalculator.butCancel.doClick();
             }
 
-            return numPassed;
+            output.put("Square function specific values", results);
+            return output;
         }
 
     //  Test Positive Square
-        protected boolean[] testPositiveSquare(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        protected Map<String, String[][]> testPositiveSquare(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[numAttempts][5];
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
@@ -53,19 +61,26 @@ public class SquareTest {
                 this.uiCalculator.butCancel.doClick();
 
                 // Rule: A square of a number should always be positive
-                numPassed[i] = (square >= 0);
+                results[i] = this.testingTool.insertValues(
+                    randomNum,
+                    square,
+                    0,
+                    (square >= 0)
+                );
             }
 
-            return numPassed;
+            output.put("Square function positive square", results);
+            return output;
         }
 
-        protected boolean[] testPositiveSquare() {
+        protected Map<String, String[][]> testPositiveSquare() {
             return testPositiveSquare(20);
         }
 
     //  Test Identity
-        protected boolean[] testIdentity(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        protected Map<String, String[][]> testIdentity(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[numAttempts][5];
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
@@ -82,25 +97,31 @@ public class SquareTest {
                 this.uiCalculator.butCancel.doClick();
 
                 // Rule: Property of squares - (x)^2 = (-x)^2
-                numPassed[i] = this.testingTool.checkFuzzyEqual(square1, square2);
+                results[i] = this.testingTool.insertValues(
+                    randomNum,
+                    square1,
+                    square2,
+                    this.testingTool.checkFuzzyEqual(square1, square2)
+                );
             }
 
-            return numPassed;
+            output.put("Square function identity", results);
+            return output;
         }
 
-        protected boolean[] testIdentity() {
+        protected Map<String, String[][]> testIdentity() {
             return testIdentity(20);
         }
 
     
     
     //  Test All
-        public Map<String, boolean[]> testAll() {
-            Map<String, boolean[]> output = new HashMap<String, boolean[]>();
+        public Map<String, String[][]> testAll() {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
 
-            output.put("Square function specific values", this.testAlgebraicValues());
-            output.put("Square function positive square", this.testPositiveSquare());
-            output.put("Square function identity", this.testIdentity());
+            output.putAll(this.testAlgebraicValues());
+            output.putAll(this.testPositiveSquare());
+            output.putAll(this.testIdentity());
 
             return output;
         }

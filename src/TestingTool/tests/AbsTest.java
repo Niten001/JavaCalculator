@@ -13,8 +13,9 @@ public class AbsTest {
     }
 
     // Test Non-Negativity
-    public boolean[] testNonNegative(int numAttempts) {
-        boolean[] numPassed = new boolean[numAttempts];
+    public Map<String, String[][]> testNonNegative(int numAttempts) {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        String[][] results = new String[numAttempts][5];
         Random rand = new Random();
 
         for(int i = 0; i < numAttempts; i++) {
@@ -23,23 +24,29 @@ public class AbsTest {
             // abs(x)
             this.testingTool.enterCalculatorInput(x);
             uiCalculator.butAbs.doClick();
-            /* uiCalculator.butEqual.doClick(); */
             double absOutput = this.testingTool.getCalculatorOutput();
 
             // Check
-            numPassed[i] = (absOutput >= 0);
+            results[i] = this.testingTool.insertValues(
+                x,
+                ((x < 0) ? -x : x),
+                absOutput,
+                (absOutput >= 0)
+            );
         }
-
-        return numPassed;
+        
+        output.put("Absolute function non-negativity", results);
+        return output;
     }
 
-    public boolean[] testNonNegative() {
+    public Map<String, String[][]> testNonNegative() {
         return testNonNegative(20);
     }
 
     // Test Evenness
-    public boolean[] testEvenness(int numAttempts) {
-        boolean[] numPassed = new boolean[numAttempts];
+    public Map<String, String[][]> testEvenness(int numAttempts) {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        String[][] results = new String[numAttempts][5];
         Random rand = new Random();
 
         for(int i = 0; i < numAttempts; i++) {
@@ -57,21 +64,28 @@ public class AbsTest {
             double absOutput2 = this.testingTool.getCalculatorOutput();
 
             // Check [x] = [-x]
-            numPassed[i] = this.testingTool.checkFuzzyEqual(absOutput1, absOutput2);
+            results[i] = this.testingTool.insertValues(
+                x,
+                absOutput1,
+                absOutput2,
+                this.testingTool.checkFuzzyEqual(absOutput1, absOutput2)
+            );
         }
-        return numPassed;
+
+        output.put("Absolute function evenness", results);
+        return output;
     }
 
-    public boolean[] testEvenness() {
+    public Map<String, String[][]> testEvenness() {
         return testEvenness(20);
     }
 
     // Test All
-    public Map<String, boolean[]> testAll() {
-        Map<String, boolean[]> output = new HashMap<String, boolean[]>();
-
-        output.put("Abs function non-negativity:", this.testNonNegative());
-        output.put("Abs function evenness:", this.testEvenness());
+    public Map<String, String[][]> testAll() {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        
+        output.putAll(this.testNonNegative());
+        output.putAll(this.testEvenness());
 
         return output;
     }

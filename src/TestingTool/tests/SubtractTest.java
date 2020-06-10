@@ -13,7 +13,7 @@ public class SubtractTest {
     }
 
     //  Test Specific Algebraic Values
-    public boolean[] testAlgebraicValues() {
+    public Map<String, String[][]> testAlgebraicValues() {
         //  Array of [Values to be tested, expected results]
         double[][] testedValues = {
             { 1, 0, 1 },
@@ -27,23 +27,32 @@ public class SubtractTest {
             { 5, -3, 8 }
         };
 
-        boolean[] numPassed = new boolean[testedValues.length];
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[testedValues.length][5];
 
         for (int i = 0; i < testedValues.length; i++) {
             this.testingTool.enterCalculatorInput(testedValues[i][0]);
             this.uiCalculator.butMinus.doClick();
             this.testingTool.enterCalculatorInput(testedValues[i][1]);
             this.uiCalculator.butEqual.doClick();
-            numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][2]);
+            results[i] = this.testingTool.insertValues(
+                testedValues[i][0],
+                testedValues[i][1],
+                testedValues[i][2],
+                this.testingTool.getCalculatorOutput(),
+                this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][2])
+            );
             this.uiCalculator.butCancel.doClick();
         }
 
-        return numPassed;
+        output.put("Subtraction function specific values", results);
+        return output;
     }
 
     //  Test Anticommutativity
-    public boolean[] testAnticommutativity(int numAttempts) {
-        boolean[] numPassed = new boolean[numAttempts];
+    public Map<String, String[][]> testAnticommutativity(int numAttempts) {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        String[][] results = new String[numAttempts][5];
         Random rand = new Random();
 
         for(int i = 0; i < numAttempts; i++) {
@@ -66,19 +75,27 @@ public class SubtractTest {
             double output2 = -1 * this.testingTool.getCalculatorOutput();
 
             // Anticommutativity relation: a - b = -(b - a)
-            numPassed[i] = this.testingTool.checkFuzzyEqual(output1, output2);
+            results[i] = this.testingTool.insertValues(
+                a,
+                b,
+                output1,
+                output2,
+                this.testingTool.checkFuzzyEqual(output1, output2)
+            );
         }
 
-        return numPassed;
+        output.put("Subtraction function anticommutativity", results);
+        return output;
     }
 
-    public boolean[] testAnticommutativity() {
+    public Map<String, String[][]> testAnticommutativity() {
         return testAnticommutativity(20);
     }
 
     //  Test Identity
-    public boolean[] testIdentity(int numAttempts) {
-        boolean[] numPassed = new boolean[numAttempts];
+    public Map<String, String[][]> testIdentity(int numAttempts) {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
+        String[][] results = new String[numAttempts][5];
         Random rand = new Random();
 
         for(int i = 0; i < numAttempts; i++) {
@@ -89,27 +106,33 @@ public class SubtractTest {
             uiCalculator.butMinus.doClick();
             this.testingTool.enterCalculatorInput(a);
             uiCalculator.butEqual.doClick();
-            double output = this.testingTool.getCalculatorOutput();
+            double output1 = this.testingTool.getCalculatorOutput();
             uiCalculator.butCancel.doClick();
 
             //  Identity relation: a - a = 0
-            numPassed[i] = this.testingTool.checkFuzzyEqual(output, 0);
+            results[i] = this.testingTool.insertValues(
+                a,
+                output1,
+                0,
+                this.testingTool.checkFuzzyEqual(output1, 0)
+            );
         }
 
-        return numPassed;
+        output.put("Subtraction function identity", results);
+        return output;
     }
 
-    public boolean[] testIdentity() {
+    public Map<String, String[][]> testIdentity() {
         return testIdentity(20);
     }
 
     //  Test All
-    public Map<String, boolean[]> testAll() {
-        Map<String, boolean[]> output = new HashMap<String, boolean[]>();
+    public Map<String, String[][]> testAll() {
+        Map<String, String[][]> output = new HashMap<String, String[][]>();
 
-        output.put("Subtraction function specific values", this.testAlgebraicValues());
-        output.put("Subtraction function anticommutativity", this.testAnticommutativity());
-        output.put("Subtraction function identity", this.testIdentity());
+        output.putAll(this.testAlgebraicValues());
+        output.putAll(this.testAnticommutativity());
+        output.putAll(this.testIdentity());
 
         return output;
     }

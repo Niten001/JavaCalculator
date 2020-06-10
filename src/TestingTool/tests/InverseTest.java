@@ -13,7 +13,7 @@ public class InverseTest {
     }
 
     //  Test Specific Algebraic Values
-        protected boolean[] testAlgebraicValues() {
+        protected Map<String, String[][]> testAlgebraicValues() {
             //  Array of [Values to be tested, expected results]
             double[][] testedValues = {
                 { 1, 1 },
@@ -27,21 +27,29 @@ public class InverseTest {
                 { 6.2, 1.0/6.2 }
             };
 
-            boolean[] numPassed = new boolean[testedValues.length];
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[testedValues.length][5];
 
             for (int i = 0; i < testedValues.length; i++) {
                 this.testingTool.enterCalculatorInput(testedValues[i][0]);
                 this.uiCalculator.butInverse.doClick();
-                numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1]);
+                results[i] = this.testingTool.insertValues(
+                    testedValues[i][0],
+                    testedValues[i][1],
+                    this.testingTool.getCalculatorOutput(),
+                    this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1])
+                );
                 this.uiCalculator.butCancel.doClick();
             }
 
-            return numPassed;
+            output.put("Inverse function specific values", results);
+            return output;
         }
 
     //  Test Identity
-        protected boolean[] testIdentity(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        protected Map<String, String[][]> testIdentity(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[numAttempts][5];
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
@@ -53,19 +61,26 @@ public class InverseTest {
                 this.uiCalculator.butCancel.doClick();
 
                 // Rule: 1/x * x = 1
-                numPassed[i] = this.testingTool.checkFuzzyEqual(randomDouble * inverse, 1);
+                results[i] = this.testingTool.insertValues(
+                    randomDouble,
+                    randomDouble * inverse,
+                    1,
+                    this.testingTool.checkFuzzyEqual(randomDouble * inverse, 1)
+                );
             }
 
-            return numPassed;
+            output.put("Inverse function identity", results);
+            return output;
         }
 
-        protected boolean[] testIdentity() {
+        protected Map<String, String[][]> testIdentity() {
             return testIdentity(20);
         }
 
     //  Test Symmetry
-        protected boolean[] testSymmetry(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        protected Map<String, String[][]> testSymmetry(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[numAttempts][5];
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
@@ -83,23 +98,29 @@ public class InverseTest {
 
 
                 // Rule: Symmetry - The inverse of an inverse of x should be x
-                numPassed[i] = this.testingTool.checkFuzzyEqual(a2, randomDouble);
+                results[i] = this.testingTool.insertValues(
+                    randomDouble,
+                    a2,
+                    randomDouble,
+                    this.testingTool.checkFuzzyEqual(a2, randomDouble)
+                );
             }
 
-            return numPassed;
+            output.put("Inverse function symmetry", results);
+            return output;
         }
 
-        protected boolean[] testSymmetry() {
+        protected Map<String, String[][]> testSymmetry() {
             return testSymmetry(20);
         }
     
     //  Test All
-        public Map<String, boolean[]> testAll() {
-            Map<String, boolean[]> output = new HashMap<String, boolean[]>();
+        public Map<String, String[][]> testAll() {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
 
-            output.put("Inverse function specific values", this.testAlgebraicValues());
-            output.put("Inverse function identity", this.testIdentity());
-            output.put("Inverse function symmetry", this.testSymmetry());
+            output.putAll(this.testAlgebraicValues());
+            output.putAll(this.testIdentity());
+            output.putAll(this.testSymmetry());
 
             return output;
         }

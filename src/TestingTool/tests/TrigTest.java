@@ -13,8 +13,9 @@ public class TrigTest {
     }
 
     //  Test Pythagorean Identity
-        protected boolean[] testPythagoreanIdentity(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        protected Map<String, String[][]> testPythagoreanIdentity(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[numAttempts][5];
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
@@ -31,22 +32,29 @@ public class TrigTest {
                 this.uiCalculator.butCancel.doClick();
 
                 // Rule: (sin(x))^2 + (cos(x))^2 = 1
-                numPassed[i] = this.testingTool.checkFuzzyEqual((a1*a1 + a2*a2), 1.0);
+                results[i] = this.testingTool.insertValues(
+                    randomDouble,
+                    (a1*a1 + a2*a2),
+                    1,
+                    this.testingTool.checkFuzzyEqual((a1*a1 + a2*a2), 1.0)
+                );
             }
 
-            return numPassed;
+            output.put("Trigonometric function pythagorean identity", results);
+            return output;
         }
 
-        protected boolean[] testPythagoreanIdentity() {
+        protected Map<String, String[][]> testPythagoreanIdentity() {
             return testPythagoreanIdentity(20);
         }
 
     //  Test Sum formula
-        protected boolean[] testSum(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        protected Map<String, String[][]> testSum(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[3*numAttempts][5];
             Random rand = new Random();
 
-            for (int i = 0; i < numAttempts; i += 3) {
+            for (int i = 0; i < (3*numAttempts); i += 3) {
                 double x1 = rand.nextDouble();
                 double x2 = rand.nextDouble();
                 
@@ -80,7 +88,13 @@ public class TrigTest {
 
                         double a2 = s1*s2 + s3*s4;
 
-                    numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
+                    results[i] = this.testingTool.insertValues(
+                        x1,
+                        x2,
+                        a1,
+                        a2,
+                        this.testingTool.checkFuzzyEqual(a1, a2)
+                    );
 
                 //  cos(x + y) = cos(x)cos(y) - sin(x)sin(y)
                     //  cos(x + y)
@@ -112,7 +126,13 @@ public class TrigTest {
 
                         a2 = s1*s2 - s3*s4;
 
-                    numPassed[i+1] = this.testingTool.checkFuzzyEqual(a1, a2);
+                    results[i+1] = this.testingTool.insertValues(
+                        x1,
+                        x2,
+                        a1,
+                        a2,
+                        this.testingTool.checkFuzzyEqual(a1, a2)
+                    );
 
                 //  tan(x + y) = (tan(x) + tan(y))/(1 - tan(x)tan(y))
                     //  tan(x + y)
@@ -134,22 +154,30 @@ public class TrigTest {
 
                         a2 = (s1 + s2)/(1 - s1*s2);
 
-                    numPassed[i+2] = this.testingTool.checkFuzzyEqual(a1, a2);
+                    results[i+2] = this.testingTool.insertValues(
+                        x1,
+                        x2,
+                        a1,
+                        a2,
+                        this.testingTool.checkFuzzyEqual(a1, a2)
+                    );
             }
 
-            return numPassed;
+            output.put("Trigonometric function sum formula", results);
+            return output;
         }
 
-        protected boolean[] testSum() {
-            return testPythagoreanIdentity(10);
+        protected Map<String, String[][]> testSum() {
+            return testSum(10);
         }
     
     //  Test Difference formula
-        protected boolean[] testDifference(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        protected Map<String, String[][]> testDifference(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[3*numAttempts][5];
             Random rand = new Random();
 
-            for (int i = 0; i < numAttempts; i += 3) {
+            for (int i = 0; i < (3*numAttempts); i += 3) {
                 double x1 = rand.nextDouble();
                 double x2 = rand.nextDouble();
                 
@@ -183,7 +211,13 @@ public class TrigTest {
 
                         double a2 = s1*s2 - s3*s4;
 
-                    numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
+                    results[i] = this.testingTool.insertValues(
+                        x1,
+                        x2,
+                        a1,
+                        a2,
+                        this.testingTool.checkFuzzyEqual(a1, a2)
+                    );
 
                 //  cos(x - y) = cos(x)cos(y) + sin(x)sin(y)
                     //  cos(x + y)
@@ -215,7 +249,13 @@ public class TrigTest {
 
                         a2 = s1*s2 + s3*s4;
 
-                    numPassed[i+1] = this.testingTool.checkFuzzyEqual(a1, a2);
+                    results[i+1] = this.testingTool.insertValues(
+                        x1,
+                        x2,
+                        a1,
+                        a2,
+                        this.testingTool.checkFuzzyEqual(a1, a2)
+                    );
 
                 //  tan(x - y) = (tan(x) - tan(y))/(1 + tan(x)tan(y))
                     //  tan(x - y)
@@ -237,23 +277,30 @@ public class TrigTest {
 
                         a2 = (s1 - s2)/(1 + s1*s2);
 
-                    numPassed[i+2] = this.testingTool.checkFuzzyEqual(a1, a2);
+                    results[i+2] = this.testingTool.insertValues(
+                        x1,
+                        x2,
+                        a1,
+                        a2,
+                        this.testingTool.checkFuzzyEqual(a1, a2)
+                    );
             }
 
-            return numPassed;
+            output.put("Trigonometric function difference formula", results);
+            return output;
         }
 
-        protected boolean[] testDifference() {
-            return testPythagoreanIdentity(10);
+        protected Map<String, String[][]> testDifference() {
+            return testDifference(10);
         }
     
     //  Test All
-        public Map<String, boolean[]> testAll() {
-            Map<String, boolean[]> output = new HashMap<String, boolean[]>();
+        public Map<String, String[][]> testAll() {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
 
-            output.put("Trigonometric function pythagorean identity", this.testPythagoreanIdentity());
-            output.put("Trigonometric function sum formula", this.testSum());
-            output.put("Trigonometric function difference formula", this.testDifference());
+            output.putAll(this.testPythagoreanIdentity());
+            output.putAll(this.testSum());
+            output.putAll(this.testDifference());
 
             return output;
         }

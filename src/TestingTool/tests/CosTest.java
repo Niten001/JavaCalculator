@@ -13,7 +13,7 @@ public class CosTest {
     }
 
     //  Test Specific Algebraic Values
-        public boolean[] testAlgebraicValues() {
+        public Map<String, String[][]> testAlgebraicValues() {
             //  Array of [Values to be tested, expected results]
             double[][] testedValues = {
                 { 0, 1 },
@@ -27,21 +27,29 @@ public class CosTest {
                 { Math.PI/2.0, 0 }
             };
 
-            boolean[] numPassed = new boolean[testedValues.length];
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[testedValues.length][5];
 
             for (int i = 0; i < testedValues.length; i++) {
                 this.testingTool.enterCalculatorInput(testedValues[i][0]);
                 this.uiCalculator.butCos.doClick();
-                numPassed[i] = this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1]);
+                results[i] = this.testingTool.insertValues(
+                    testedValues[i][0],
+                    testedValues[i][1],
+                    this.testingTool.getCalculatorOutput(),
+                    this.testingTool.checkFuzzyEqual(this.testingTool.getCalculatorOutput(), testedValues[i][1])
+                );
                 this.uiCalculator.butCancel.doClick();
             }
 
-            return numPassed;
+            output.put("Cosine function specific values", results);
+            return output;
         }
 
     //  Test Parity
-        public boolean[] testParity(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        public Map<String, String[][]> testParity(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[numAttempts][5];
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
@@ -58,18 +66,25 @@ public class CosTest {
                 this.uiCalculator.butCancel.doClick();
 
                 // Rule: cos(x) = cos(-x)
-                numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
+                results[i] = this.testingTool.insertValues(
+                    randomDouble,
+                    a1,
+                    a2,
+                    this.testingTool.checkFuzzyEqual(a1, a2)
+                );
             }
 
-            return numPassed;
+            output.put("Cosine function parity", results);
+            return output;
         }
 
-        public boolean[] testParity() {
+        public Map<String, String[][]> testParity() {
             return testParity(20);
         }
     //  Test Periodicity
-        public boolean[] testPeriodicity(int numAttempts) {
-            boolean[] numPassed = new boolean[numAttempts];
+        public Map<String, String[][]> testPeriodicity(int numAttempts) {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
+            String[][] results = new String[numAttempts][5];
             Random rand = new Random();
 
             for (int i = 0; i < numAttempts; i++) {
@@ -87,22 +102,29 @@ public class CosTest {
                 this.uiCalculator.butCancel.doClick();
 
                 // Rule: cos(x) = cos(x + 2πk) where k ∈ Z
-                numPassed[i] = this.testingTool.checkFuzzyEqual(a1, a2);
+                results[i] = this.testingTool.insertValues(
+                    randomDouble,
+                    randomInt,
+                    a1,
+                    a2,
+                    this.testingTool.checkFuzzyEqual(a1, a2)
+                );
             }
 
-            return numPassed;
+            output.put("Cosine function periodicity", results);
+            return output;
         }
 
-        public boolean[] testPeriodicity() {
+        public Map<String, String[][]> testPeriodicity() {
             return testPeriodicity(20);
         }
     //  Test All
-        public Map<String, boolean[]> testAll() {
-            Map<String, boolean[]> output = new HashMap<String, boolean[]>();
+        public Map<String, String[][]> testAll() {
+            Map<String, String[][]> output = new HashMap<String, String[][]>();
 
-            output.put("Cosine function specific values", this.testAlgebraicValues());
-            output.put("Cosine function parity", this.testParity());
-            output.put("Cosine function periodicity", this.testPeriodicity());
+            output.putAll(this.testAlgebraicValues());
+            output.putAll(this.testParity());
+            output.putAll(this.testPeriodicity());
 
             return output;
         }
